@@ -11,6 +11,8 @@ This `README.md` file guides how to deploy a Tomcat Server manually
 - [Manual Deploying Tomcat Server](#manual-deploying-tomcat-server)
 - [Deploy your Web Application](#deploy-your-web-application)
 - [Undeploy your Web Application](#undeploy-your-web-application)
+- [Learn more](#learn-more)
+- [License & Copyright](#license--copyright)
 
 ## What is Tomcat Server?
 
@@ -54,7 +56,7 @@ Or
 - `Press P`
 - The window displays Path
 - Click `Path` then click `Edit...`
-- Click New
+- Click `New`
 - Type `[above-url-to-jdk-folder]\bin`
 
 4. CATALINA_HOME:
@@ -81,10 +83,21 @@ datetime INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolH
 ## Deploy your Web Application
 - Find the `.war` file then paste in `webapps` folder in folder Apache Tomcat in your computer
   - Ex: [MVC2.war](https://github.com/tienhuynh-tn/java-web-application-development-prj301/blob/master/MVC2/dist/MVC2.war)
-- Go back to your browser then type more: your-project-name
+- Go back to your browser then type more: `your-project-name`
 - Your project will run automatically
 
 ## Undeploy your Web Application
 - Go to `webapps` folder
 - Choose your `project-folder` and `project-name.war`, then delete
-- Go back to your cmd, type shutdown
+- Go back to your cmd, type `shutdown`
+
+## Learn More
+- [Triển khai Deploy ứng dụng web trên server Tomcat độc lập với Netbeans](http://www.kieutrongkhanh.net/2016/08/trien-khai-deploy-ung-dung-web-tren.html) - Author: Kieu Trong Khanh
+
+## License & Copyright
+&copy; 2021 Tien Huynh tienhuynh-tn Licensed under the [MIT LICENSE](https://github.com/tienhuynh-tn/java-web-application-development-prj301/blob/master/LICENSE).
+
+> :love_you_gesture: Feel free to use my repository and star it if you find something interesting :love_you_gesture:
+
+
+
