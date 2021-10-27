@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 public class DispatchServlet extends HttpServlet {
     private final String LOGIN_CONTROLLER = "LoginServlet";
     private final String LOGIN_PAGE = "login.html";
-    private final String SEARCH_LASTNAME_CONTROLLER = "SearchLastnameServlet";
     private final String DELETE_ACCOUNT_CONTROLLER = "DeleteAccountServlet";
     private final String UPDATE_ACCOUNT_CONTROLLER = "UpdateAccountServlet";
     private final String STARTUP_APP_CONTROLLER = "StartupApplicationServlet";
