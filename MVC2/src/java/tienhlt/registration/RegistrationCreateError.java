@@ -15,7 +15,9 @@ public class RegistrationCreateError implements Serializable{
     private String usernameIsExisted;
     private String usernameLengthViolent;
     private String passwordLengthViolent;
-    private String fullNameLengthViolent;
+    private String firstNameLengthViolent;
+    private String middleNameLengthViolent;
+    private String lastNameLengthViolent;
     private String confirmNotMatch;
 
     public RegistrationCreateError() {
@@ -64,17 +66,45 @@ public class RegistrationCreateError implements Serializable{
     }
 
     /**
-     * @return the fullNameLengthViolent
+     * @return the firstNameLengthViolent
      */
-    public String getFullNameLengthViolent() {
-        return fullNameLengthViolent;
+    public String getFirstNameLengthViolent() {
+        return firstNameLengthViolent;
     }
 
     /**
-     * @param fullNameLengthViolent the fullNameLengthViolent to set
+     * @param firstNameLengthViolent the firstNameLengthViolent to set
      */
-    public void setFullNameLengthViolent(String fullNameLengthViolent) {
-        this.fullNameLengthViolent = fullNameLengthViolent;
+    public void setFirstNameLengthViolent(String firstNameLengthViolent) {
+        this.firstNameLengthViolent = firstNameLengthViolent;
+    }
+
+    /**
+     * @return the middleNameLengthViolent
+     */
+    public String getMiddleNameLengthViolent() {
+        return middleNameLengthViolent;
+    }
+
+    /**
+     * @param middleNameLengthViolent the middleNameLengthViolent to set
+     */
+    public void setMiddleNameLengthViolent(String middleNameLengthViolent) {
+        this.middleNameLengthViolent = middleNameLengthViolent;
+    }
+
+    /**
+     * @return the lastNameLengthViolent
+     */
+    public String getLastNameLengthViolent() {
+        return lastNameLengthViolent;
+    }
+
+    /**
+     * @param lastNameLengthViolent the lastNameLengthViolent to set
+     */
+    public void setLastNameLengthViolent(String lastNameLengthViolent) {
+        this.lastNameLengthViolent = lastNameLengthViolent;
     }
 
     /**

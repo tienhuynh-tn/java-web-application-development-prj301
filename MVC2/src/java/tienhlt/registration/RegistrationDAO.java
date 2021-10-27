@@ -228,13 +228,15 @@ public class RegistrationDAO implements Serializable {
             con = DBHelpers.makeConnection();
             if (con != null) {
                 String sql = "Insert Into Registration("
-                        + "username, password, lastname, isAdmin"
-                        + ") Values(?, ?, ?, ?)";
+                        + "username, password, FirstName, MiddleName, LastName, isAdmin"
+                        + ") Values(?, ?, ?, ?, ?, ?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, dto.getUsername());
                 stm.setString(2, dto.getPassword());
-                stm.setString(3, "N'" + dto.getLastname() + "'");
-                stm.setBoolean(4, dto.isRole());
+                stm.setNString(3, dto.getFirstname());
+                stm.setNString(4, dto.getMiddlename());
+                stm.setNString(5, dto.getLastname());
+                stm.setBoolean(6, dto.isRole());
                 int affectedRow = stm.executeUpdate();
                 if (affectedRow > 0) {
                     return true;

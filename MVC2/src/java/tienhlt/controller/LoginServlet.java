@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +38,6 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         
         String username = request.getParameter("txtUsername");
         String password = request.getParameter("txtPassword");
@@ -72,10 +72,9 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException ex) {
             log("LoginServlet_SQL: " + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
-//            RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
-            out.close();
+//            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

@@ -44,7 +44,9 @@ public class SignUpServlet extends HttpServlet {
         String username = request.getParameter("txtUsername");
         String password = request.getParameter("txtPassword");
         String confirm = request.getParameter("txtConfirm");
-        String fullname = request.getParameter("txtFullname");
+        String firstname = request.getParameter("txtFirstname");
+        String middlename = request.getParameter("txtMiddlename");
+        String lastname = request.getParameter("txtLastname");
         boolean foundErr = false;
         RegistrationCreateError errors = new RegistrationCreateError();
         String url = ERROR_PAGE;
@@ -62,9 +64,17 @@ public class SignUpServlet extends HttpServlet {
                 foundErr = true;
                 errors.setConfirmNotMatch("Confirm must match password!!!");
             }
-            if (fullname.trim().length() < 2 || fullname.trim().length() > 50) {
+            if (firstname.trim().length() < 2 || firstname.trim().length() > 20) {
                 foundErr = true;
-                errors.setFullNameLengthViolent("Full name requires from 2 to 50 chars");
+                errors.setFirstNameLengthViolent("First name requires from 2 to 20 chars");
+            }
+            if (middlename.trim().length() < 0 || middlename.trim().length() > 20) {
+                foundErr = true;
+                errors.setMiddleNameLengthViolent("Middle name requires from 0 to 20 chars");
+            }
+            if (lastname.trim().length() < 2 || lastname.trim().length() > 20) {
+                foundErr = true;
+                errors.setLastNameLengthViolent("Last name requires from 2 to 20 chars");
             }
             //1.1 If so, notify to user correct them
             if (foundErr) {
@@ -74,7 +84,7 @@ public class SignUpServlet extends HttpServlet {
             //1.2 If no error occurs, call DAO to insert to DB
             RegistrationDAO dao = new RegistrationDAO();
             RegistrationDTO dto = 
-                    new RegistrationDTO(username, password, fullname, false);
+                    new RegistrationDTO(username, password, firstname, middlename, lastname, false);
             boolean result = dao.createNewAcccount(dto);
             //2. If task is success, redirect to Login Page
             if (result) {

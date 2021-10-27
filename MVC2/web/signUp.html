@@ -13,10 +13,12 @@ For more information, please contact via my email: tien.huynhlt.tn@gmail.com
     <body>
         <h1>Create New Account</h1>
         <form action="DispatchServlet" method="POST">
-            Username* <input type="text" name="txtUsername" value="" /> {e.g. 6 - 30 chars} </br>
-            Password* <input type="password" name="txtPassword" value="" /> {e.g. 6 - 20 chars} </br>
-            Confirm* <input type="password" name="txtConfirm" value="" /> </br>
-            Full name* <input type="text" name="txtFullname" value="" /> {e.g. 2 - 50 chars} </br>
+            Username* <input type="text" name="txtUsername" value="" required/> {e.g. 6 - 30 chars} <br/>
+            Password* <input type="password" name="txtPassword" value="" required/> {e.g. 6 - 20 chars} <br/>
+            Confirm* <input type="password" name="txtConfirm" value="" required/> <br/>
+            First name* <input type="text" name="txtFirstname" value="" required/> {e.g. 2 - 20 chars} <br/>
+            Middle name <input type="text" name="txtMiddlename" value="" /> {e.g. 0 - 20 chars} <br/>
+            Last name* <input type="text" name="txtLastname" value="" required/> {e.g. 2 - 20 chars} <br/>
             <input type="submit" value="Sign Up" name="btAction" />
             <input type="reset" value="Reset" />
         </form>
