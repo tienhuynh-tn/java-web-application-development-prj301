@@ -6,7 +6,7 @@ This `README.md` file guides how to deploy a Tomcat Server manually
 - [What is Tomcat Server?](#octocat-what-is-tomcat-server)
 - [Download Apache Tomcat](#link-download-apache-tomcat)
 - [Check for Java Runtime Environment and Set Up](#heavy_check_mark-check-for-java-runtime-environment-and-set-up)
-  - [Check for Java Runtime Environment](#triangular_flag_on_post-check-for-java-runtime-environment)
+  - [Check for Java Runtime Environment](#triangular_flag_on_postcheck-for-java-runtime-environment)
   - [Set up](#computer-set-up)
 - [Manual Deploying Tomcat Server](#running_woman-manual-deploying-tomcat-server)
 - [Deploy your Web Application](#rocket-deploy-your-web-application)
