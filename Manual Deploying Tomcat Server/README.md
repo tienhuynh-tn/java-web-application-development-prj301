@@ -3,16 +3,16 @@
 This `README.md` file guides how to deploy a Tomcat Server manually
 
 ## :bookmark_tabs: Table of Contents
-- [What is Tomcat Server?](#what-is-tomcat-server)
-- [Download Apache Tomcat](#download-apache-tomcat)
-- [Check for Java Runtime Environment and Set Up](#check-for-java-runtime-environment-and-set-up)
-  - [Check for Java Runtime Environment](#check-for-java-runtime-environment)
-  - [Set up](#set-up)
-- [Manual Deploying Tomcat Server](#manual-deploying-tomcat-server)
-- [Deploy your Web Application](#deploy-your-web-application)
-- [Undeploy your Web Application](#undeploy-your-web-application)
-- [Learn more](#learn-more)
-- [License & Copyright](#license--copyright)
+- [What is Tomcat Server?](#octocat-what-is-tomcat-server)
+- [Download Apache Tomcat](#link-download-apache-tomcat)
+- [Check for Java Runtime Environment and Set Up](#heavy_check_mark-check-for-java-runtime-environment-and-set-up)
+  - [Check for Java Runtime Environment](#triangular_flag_on_post-check-for-java-runtime-environment)
+  - [Set up](#computer-set-up)
+- [Manual Deploying Tomcat Server](#running_woman-manual-deploying-tomcat-server)
+- [Deploy your Web Application](#rocket-deploy-your-web-application)
+- [Undeploy your Web Application](#hourglass_flowing_sand-undeploy-your-web-application)
+- [Learn more](#closed_book-learn-more)
+- [License & Copyright](#grimacing-license--copyright)
 
 ## :octocat: What is Tomcat Server?
 
