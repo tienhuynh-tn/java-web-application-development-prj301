@@ -27,17 +27,5 @@ public class DBHelpers implements Serializable {
         Connection con = ds.getConnection();
         
         return con;
-        
-//        //1. Có drivers -> add driver to library
-//        //1.1 Load drivers
-//        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-//        //2. create url connection string
-//        String url = "jdbc:sqlserver://localhost:1433;"
-//                + "databaseName=PRJ;"
-//                + "instanceName=TIENHUYNHTN";
-//        //3. Open connection 
-//        Connection con = DriverManager.getConnection(url, "sa", "Thuytien");
-//
-//        return con;
     }
 }

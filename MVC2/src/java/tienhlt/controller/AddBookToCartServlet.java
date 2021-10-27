@@ -22,8 +22,6 @@ import tienhlt.cart.CartObject;
  */
 @WebServlet(name = "AddBookToCartServlet", urlPatterns = {"/AddBookToCartServlet"})
 public class AddBookToCartServlet extends HttpServlet {
-//    private final String SHOPPING_PAGE = "shopping.html";
-    private final String SHOPPING_PAGE = "shopping.jsp";
     private final String ERROR_PAGE = "error.html";
 
     /**
@@ -39,7 +37,6 @@ public class AddBookToCartServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-//        String url = SHOPPING_PAGE;
         String url = ERROR_PAGE;
         
         try {
@@ -51,10 +48,8 @@ public class AddBookToCartServlet extends HttpServlet {
                 cart = new CartObject();
             }//cart is not existed --> create cart
             //3. Cust takes book item --> parameter
-//            String name = request.getParameter("choBook");
             String SKU = request.getParameter("pk");
             //4. Cust drops item down
-//            cart.addItemToCart(name);
             cart.addItemToCart(SKU);
             //5. Update to cart place
             session.setAttribute("CART", cart);

@@ -6,7 +6,6 @@
 package tienhlt.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
@@ -51,6 +50,9 @@ public class SignUpServlet extends HttpServlet {
         RegistrationCreateError errors = new RegistrationCreateError();
         String url = ERROR_PAGE;
         
+        System.out.println(firstname + " First");
+        System.out.println(lastname + " Last");
+        
         try {
             //1. Check user constraint validation
             if (username.trim().length() < 6 || username.trim().length() > 30) {
@@ -83,6 +85,8 @@ public class SignUpServlet extends HttpServlet {
             } //en if Errors occur
             //1.2 If no error occurs, call DAO to insert to DB
             RegistrationDAO dao = new RegistrationDAO();
+            username = username.trim();
+            password = password.trim();
             RegistrationDTO dto = 
                     new RegistrationDTO(username, password, firstname, middlename, lastname, false);
             boolean result = dao.createNewAcccount(dto);

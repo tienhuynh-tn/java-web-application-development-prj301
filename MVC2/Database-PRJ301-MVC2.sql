@@ -11,7 +11,7 @@ CREATE TABLE Registration
 	FirstName nvarchar(20) NOT NULL,
 	MiddleName nvarchar(20),
 	LastName nvarchar(20) NOT NULL,
-	isAdmin bit NOT NULL,
+	isAdmin bit DEFAULT (0) NOT NULL,
 	CONSTRAINT PK_Registration PRIMARY KEY (username)
 )
 GO

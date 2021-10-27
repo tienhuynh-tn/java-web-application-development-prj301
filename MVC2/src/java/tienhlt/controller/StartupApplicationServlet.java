@@ -73,7 +73,9 @@ public class StartupApplicationServlet extends HttpServlet {
                     if (result) {
                         url = SEARCH_PAGE;
                         HttpSession session = request.getSession();
+                        String fullname = dao.showFullName(username);
                         session.setAttribute("USER", username);
+                        session.setAttribute("FULL_NAME", fullname);
 
                         String seusername = (String)session.getAttribute("USER");
                         System.out.println(seusername + " startup");

@@ -20,15 +20,13 @@ import tienhlt.registration.RegistrationDTO;
 
 /**
  *
- * @author Huỳnh Lê Thủy Tiên <tien.huynhlt.tn@gmail.com>
+ * @author Huynh Le Thuy Tien
  */
-@WebServlet(name = "SearchLastnameServlet", urlPatterns = {"/SearchLastnameServlet"})
-public class SearchLastnameServlet extends HttpServlet {
-//    private final String SEARCH_PAGE = "search.html";
+@WebServlet(name = "SearchFullNameServlet", urlPatterns = {"/SearchFullNameServlet"})
+public class SearchFullNameServlet extends HttpServlet {
     private final String SEARCH_PAGE = "search.jsp";
     private final String SHOW_RESULT_PAGE = "search.jsp";
-    private final String DISPATCH_CONTROLLER = "DispatchServlet";
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,15 +45,13 @@ public class SearchLastnameServlet extends HttpServlet {
         
         try {
             if (!searchValue.trim().isEmpty()) {
-                //call DAO --> new & call method
                 RegistrationDAO dao = new RegistrationDAO();
-                dao.searchLastName(searchValue);
+                dao.searchFullName(searchValue);
                 
                 List<RegistrationDTO> result = dao.getAccountList();
                 request.setAttribute("SEARCH_RESULT", result);
                 url = SHOW_RESULT_PAGE;
-                
-            } //end if searchValue is inputted value from user
+            }
         } catch (SQLException ex) {
             log("SearchLastnameServlet_SQL: " + ex.getMessage());
         } catch (NamingException ex) {

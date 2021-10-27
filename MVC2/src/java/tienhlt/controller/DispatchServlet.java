@@ -34,6 +34,7 @@ public class DispatchServlet extends HttpServlet {
     private final String CHECK_OUT_ORDER_CONTROLLER = "CheckOutOrderServlet";
     private final String CONFIRM_CHECK_OUT_CONTROLLER = "ConfirmCheckOutServlet";
     private final String SIGN_UP_CONTROLLER = "SignUpServlet";
+    private final String SEARCH_FULLNAME_CONTROLLER = "SearchFullNameServlet";
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
@@ -55,6 +56,7 @@ public class DispatchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         //which buttin did user clicked?
         String button = request.getParameter("btAction");
@@ -66,7 +68,7 @@ public class DispatchServlet extends HttpServlet {
             } else if (button.equals("Login")) {
                 url = LOGIN_CONTROLLER;
             } else if (button.equals("Search")){
-                url = SEARCH_LASTNAME_CONTROLLER;
+                url = SEARCH_FULLNAME_CONTROLLER;
             } else if (button.equals("Delete")) {
                 url = DELETE_ACCOUNT_CONTROLLER;
             } else if (button.equals("Update")) {
@@ -75,7 +77,7 @@ public class DispatchServlet extends HttpServlet {
                 url = ADD_BOOK_TO_CART_CONTROLLER;
             } else if (button.equals("View Your Cart")) {
                 url = VIEW_CART_PAGE; 
-            } else if (button.equals("logout")) {
+            } else if (button.equals("Logout")) {
                 url = LOGOUT_CONTROLLER;
             } else if (button.equals("Buy")) {
                 url = BUY_BOOK_CONTROLLER;

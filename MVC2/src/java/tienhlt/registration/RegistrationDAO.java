@@ -20,6 +20,12 @@ import tienhlt.utils.DBHelpers;
  * @author Huỳnh Lê Thủy Tiên <tien.huynhlt.tn@gmail.com>
  */
 public class RegistrationDAO implements Serializable {
+    private List<RegistrationDTO> accountList;
+
+    public List<RegistrationDTO> getAccountList() {
+        return accountList;  
+    }
+    
     public boolean checkLogin(String username, String password)
             throws SQLException, NamingException {
         Connection con = null;
@@ -60,13 +66,7 @@ public class RegistrationDAO implements Serializable {
         return false;
     }
     
-    private List<RegistrationDTO> accountList;
-
-    public List<RegistrationDTO> getAccountList() {
-        return accountList;  
-    }
-    
-    public void searchLastName(String keyword) 
+    public void searchFullName(String keyword) 
         throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -79,7 +79,7 @@ public class RegistrationDAO implements Serializable {
                 //2. create SQL String
                 String sql = "Select username, password, LastName + ' ' + MiddleName + ' ' + FirstName AS [FullName], isAdmin "
                         + "From Registration "
-                        + "Where LastName Like ? ";
+                        + "Where (LastName + ' ' + MiddleName + ' ' + FirstName) Like ? ";
                 //3. create statement object to load SQL String
                 //and set value to parameters
                 stm = con.prepareStatement(sql);
@@ -228,15 +228,14 @@ public class RegistrationDAO implements Serializable {
             con = DBHelpers.makeConnection();
             if (con != null) {
                 String sql = "Insert Into Registration("
-                        + "username, password, FirstName, MiddleName, LastName, isAdmin"
-                        + ") Values(?, ?, ?, ?, ?, ?)";
+                        + "username, password, FirstName, MiddleName, LastName"
+                        + ") Values(?, ?, ?, ?, ?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, dto.getUsername());
                 stm.setString(2, dto.getPassword());
                 stm.setNString(3, dto.getFirstname());
                 stm.setNString(4, dto.getMiddlename());
                 stm.setNString(5, dto.getLastname());
-                stm.setBoolean(6, dto.isRole());
                 int affectedRow = stm.executeUpdate();
                 if (affectedRow > 0) {
                     return true;

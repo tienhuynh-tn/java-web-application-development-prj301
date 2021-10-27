@@ -8,11 +8,13 @@ package tienhlt.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import tienhlt.registration.RegistrationCreateError;
 import tienhlt.registration.RegistrationDAO;
 
 /**
@@ -44,14 +46,24 @@ public class UpdateAccountServlet extends HttpServlet {
         if (checkAdmin != null) {
             role = true;
         }
+        boolean foundErr = false;
+        RegistrationCreateError errors = new RegistrationCreateError();
         
         String url = ERROR_PAGE;
         
         try {
-            System.out.println(username);
-            System.out.println(password);
-            System.out.println(checkAdmin);
-            System.out.println(role);
+            if (password.trim().length() < 6 || password.trim().length() > 20) {
+                foundErr = true;
+                errors.setPasswordLengthViolent("Password requires from 6 to 20 chars");
+            }
+            if (foundErr) {
+                request.setAttribute("UPDATE_ERR", errors);
+                url = "DispatchServlet"
+                        + "?btAction=Search"
+                        + "&txtSearchValue=" + searchValue;
+                return;
+            }
+            password = password.trim();
             RegistrationDAO dao = new RegistrationDAO();
             boolean result = dao.updateAccount(username, password, role);
             
@@ -66,7 +78,9 @@ public class UpdateAccountServlet extends HttpServlet {
         } catch (SQLException ex) {
             log("UpdateAccountServlet_Naming: " + ex.getMessage());
         } finally {
-            response.sendRedirect(url);
+//            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

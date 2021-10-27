@@ -13,6 +13,7 @@
         <title>Sign Up</title>
     </head>
     <body>
+        <%--request.setCharacterEncoding("UTF-8");--%>
         <h1>Create New Account</h1>
         <form action="DispatchServlet" method="POST">
             <c:set var="errors" value="${requestScope.SIGNUPERRS}" />
@@ -40,13 +41,13 @@
                     ${errors.firstNameLengthViolent}
                 </font> </br>
             </c:if>
-            Middle name <input type="text" name="txtMiddlename" value="" /> {e.g. 0 - 50 chars} <br/>
+            Middle name <input type="text" name="txtMiddlename" value="${param.txtMiddlename}" /> {e.g. 0 - 50 chars} <br/>
             <c:if test="${not empty errors.middleNameLengthViolent}">
                 <font color="red">
                     ${errors.middleNameLengthViolent}
                 </font> </br>
             </c:if>
-            Last name* <input type="text" name="txtLastname" value="" required/> {e.g. 2 - 50 chars} <br/>
+            Last name* <input type="text" name="txtLastname" value="${param.txtLastname}" required/> {e.g. 2 - 50 chars} <br/>
             <c:if test="${not empty errors.lastNameLengthViolent}">
                 <font color="red">
                     ${errors.lastNameLengthViolent}
@@ -55,6 +56,7 @@
             <input type="submit" value="Sign Up" name="btAction" />
             <input type="reset" value="Reset" />
         </form> </br>
+        <%System.out.println(request.getParameter("txtFirstname") + " signUp.jsp");%>
         <c:if test="${not empty errors.usernameIsExisted}">
             <font color="red">
                 ${errors.usernameIsExisted}

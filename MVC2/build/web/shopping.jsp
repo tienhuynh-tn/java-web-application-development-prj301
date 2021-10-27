@@ -4,8 +4,6 @@
     Author     : Huynh Le Thuy Tien
 --%>
 
-<%--<%@page import="java.util.List"%>
-<%@page import="tienhlt.product.ProductDTO"%>--%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -73,70 +71,3 @@
         </c:if>
     </body>
 </html>
-<%--<h1>Welcome to PRJ301 Book Store</h1>
-<%
-List<ProductDTO> result = (List<ProductDTO>)request.getAttribute("BOOK_LIST");
-if (result != null) {
-    %>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>SKU</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Add to Cart</th>
-            </tr>
-        </thead>
-        <tbody>
-            <%
-            int count = 0;
-            for (ProductDTO dTO: result) {
-                String urlRewriting = "DispatchServlet"
-                        + "?btAction=Add Book to Your Cart"
-                        + "&pk=" + dTO.getSKU();
-                %>
-                <form action="DispatchServlet">
-                    <tr>
-                        <td>
-                            <%= ++count %>
-                        </td>
-                        <td>
-                            <%= dTO.getSKU() %>
-                        </td>
-                        <td>
-                            <%= dTO.getName() %>
-                        </td>
-                        <td>
-                            <%= dTO.getPrice() %>
-                        </td>
-                        <td>
-                            <%= dTO.getDescription() %>
-                        </td>
-                        <td>
-                            <%= dTO.getQuantity() %>
-                        </td>
-                        <td>
-                            <a href="<%= urlRewriting %>">Add</a>
-                        </td>
-                    </tr>
-                </form>
-            <%
-            }
-            %>
-        </tbody>
-    </table>
-    <form action="DispatchServlet">
-        <input type="submit" value="View Your Cart" name="btAction" />
-    </form>
-<%
-} else {
-    %>
-    <h1>No Book in Store</h1>
-<%
-}
-%>
-</body>--%>
-
