@@ -70,9 +70,11 @@ public class UpdateAccountServlet extends HttpServlet {
                 return;
             }
             
-            if (password.trim().length() < 6 || password.trim().length() > 20) {
+            if (!password.trim().matches(properties.getProperty(
+                    MyApplicationConstant.UpdateFeatures.PASSWORD_REGEX))) {
                 foundErr = true;
-                errors.setPasswordLengthViolent("Password requires from 6 to 20 chars");
+                errors.setPasswordViolent(properties.getProperty(
+                    MyApplicationConstant.UpdateFeatures.PASSWORD_VIOLENT_NOTICE));
             }
             
             if (foundErr) {

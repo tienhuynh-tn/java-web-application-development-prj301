@@ -23,9 +23,9 @@
                 </font> </br>
             </c:if>
             Password* <input type="password" name="txtPassword" value="" /> {e.g. 6 - 20 chars} </br>
-            <c:if test="${not empty errors.passwordLengthViolent}">
+            <c:if test="${not empty errors.passwordViolent}">
                 <font color="red">
-                    ${errors.passwordLengthViolent}
+                    ${errors.passwordViolent}
                 </font> </br>
             </c:if>
             Confirm* <input type="password" name="txtConfirm" value="" /> </br>

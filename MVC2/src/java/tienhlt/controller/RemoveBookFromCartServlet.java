@@ -82,12 +82,11 @@ public class RemoveBookFromCartServlet extends HttpServlet {
             //7. Refresh viewing cart --> call view cart function again
 //            String urlWriting = "DispatchServlet"
 //                    + "?btAction=Buy";
-//            String urlWriting = properties.getProperty(
-//                            MyApplicationConstant.RemoveBookFeatures.VIEW_CART_PAGE);
 //            String urlWriting = "DispatchServlet"
 //                    + "?btAction=View Your Cart";
-            String urlWriting = "viewCartPage";
-            response.sendRedirect(urlWriting);
+            String url = properties.getProperty(
+                                    MyApplicationConstant.RemoveBookFeatures.VIEW_CART_PAGE);
+            response.sendRedirect(url);
             out.close();
         }
     }

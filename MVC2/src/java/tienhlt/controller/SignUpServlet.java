@@ -63,26 +63,33 @@ public class SignUpServlet extends HttpServlet {
             //1. Check user constraint validation
             if (username.trim().length() < 6 || username.trim().length() > 30) {
                 foundErr = true;
-                errors.setUsernameLengthViolent("Username requires from 6 to 30 chars");
+                errors.setUsernameLengthViolent(properties.getProperty(
+                    MyApplicationConstant.SignUpFeatures.USERNAME_LENGTH_VIOLENT_NOTICE));
             }
-            if (password.trim().length() < 6 || password.trim().length() > 20) {
+            if (!password.trim().matches(properties.getProperty(
+                    MyApplicationConstant.SignUpFeatures.PASSWORD_REGEX))) {
                 foundErr = true;
-                errors.setPasswordLengthViolent("Password requires from 6 to 20 chars");
+                errors.setPasswordViolent(properties.getProperty(
+                    MyApplicationConstant.SignUpFeatures.PASSWORD_VIOLENT_NOTICE));
             } else if (!password.trim().equals(confirm.trim())) {
                 foundErr = true;
-                errors.setConfirmNotMatch("Confirm must match password!!!");
+                errors.setConfirmNotMatch(properties.getProperty(
+                    MyApplicationConstant.SignUpFeatures.CONFIRM_NOTMATCH_NOTICE));
             }
             if (firstname.trim().length() < 2 || firstname.trim().length() > 20) {
                 foundErr = true;
-                errors.setFirstNameLengthViolent("First name requires from 2 to 20 chars");
+                errors.setFirstNameLengthViolent(properties.getProperty(
+                    MyApplicationConstant.SignUpFeatures.FIRSTNAME_LENGTH_VIOLENT_NOTICE));
             }
             if (middlename.trim().length() < 0 || middlename.trim().length() > 20) {
                 foundErr = true;
-                errors.setMiddleNameLengthViolent("Middle name requires from 0 to 20 chars");
+                errors.setMiddleNameLengthViolent(properties.getProperty(
+                    MyApplicationConstant.SignUpFeatures.MIDDLENAME_LENGTH_VIOLENT_NOTICE));
             }
             if (lastname.trim().length() < 2 || lastname.trim().length() > 20) {
                 foundErr = true;
-                errors.setLastNameLengthViolent("Last name requires from 2 to 20 chars");
+                errors.setLastNameLengthViolent(properties.getProperty(
+                    MyApplicationConstant.SignUpFeatures.LASTNAME_LENGTH_VIOLENT_NOTICE));
             }
             //1.1 If so, notify to user correct them
             if (foundErr) {

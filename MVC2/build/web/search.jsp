@@ -18,6 +18,9 @@
         Welcome, ${sessionScope.FULL_NAME}
         </font> </br>
         <a href="logoutAction">Log Out</a>
+        
+        <c:set var="properties" value="${applicationScope.SITE_MAP}" />
+        <c:set var="adminUserName" value="${properties.getProperty('admin')}" />
 
         <c:set var="isAdmin" value="${sessionScope.ADMIN}" />
 
@@ -27,7 +30,7 @@
             <form action="searchAction">
                 Search value <input type="text" name="txtSearchValue" 
                                     value="${param.txtSearchValue}" /> <br/>
-                <input type="submit" value="Search" name="btAction" />
+                <input type="submit" value="Search" />
             </form> <br/>
 
             <c:set var="searchValue" value="${param.txtSearchValue}" />
@@ -35,9 +38,9 @@
                 <c:set var="result" value="${requestScope.SEARCH_RESULT}" ></c:set>
                 <c:if test="${not empty result}">
                     <c:set var="error" value="${requestScope.UPDATE_ERR}" />
-                    <c:if test="${not empty error.passwordLengthViolent}">
+                    <c:if test="${not empty error.passwordViolent}">
                         <font color="red">
-                        ${error.passwordLengthViolent}
+                        ${error.passwordViolent}
                         </font>
                     </c:if>
                     <table border="1">
@@ -82,28 +85,28 @@
                                             <c:param name="pk" value="${dto.username}" />
                                             <c:param name="lastSearchValue" value="${searchValue}" />
                                         </c:url>
-                                        <c:if test="${isAdmin eq 'admin123'}">
-                                            <c:if test="${dto.username ne 'admin123'}">
+                                        <c:if test="${isAdmin eq adminUserName}">
+                                            <c:if test="${dto.username ne adminUserName}">
                                                 <a href="${urlRewriting}">Delete</a>
                                             </c:if>
                                         </c:if>
-                                        <c:if test="${isAdmin ne 'admin123'}">
+                                        <c:if test="${isAdmin ne adminUserName}">
                                             <c:if test="${dto.role eq false}">
                                                 <a href="${urlRewriting}">Delete</a>
                                             </c:if>
                                         </c:if>
                                     </td>
                                     <td>
-                                        <c:if test="${isAdmin eq 'admin123'}">
+                                        <c:if test="${isAdmin eq adminUserName}">
                                             <input type="submit" value="Update"
-                                                   <c:if test="${dto.username eq 'admin123'}">
+                                                   <c:if test="${dto.username eq adminUserName}">
                                                        disabled
                                                    </c:if>
                                                    />
                                             <input type="hidden" name="lastSearchValue" 
                                                    value="${searchValue}" />
                                         </c:if>
-                                        <c:if test="${isAdmin ne 'admin123'}">
+                                        <c:if test="${isAdmin ne adminUserName}">
                                             <input type="submit" value="Update"
                                                    <c:if test="${isAdmin ne dto.username}">
                                                        <c:if test="${dto.role eq true}">
