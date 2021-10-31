@@ -6,17 +6,22 @@
 package tienhlt.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import tienhlt.registration.RegistrationDAO;
 import tienhlt.registration.RegistrationDTO;
+import tienhlt.utils.MyApplicationConstant;
 
 /**
  *
@@ -24,8 +29,6 @@ import tienhlt.registration.RegistrationDTO;
  */
 @WebServlet(name = "SearchFullNameServlet", urlPatterns = {"/SearchFullNameServlet"})
 public class SearchFullNameServlet extends HttpServlet {
-    private final String SEARCH_PAGE = "search.jsp";
-    private final String SHOW_RESULT_PAGE = "search.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,18 +42,32 @@ public class SearchFullNameServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        request.setCharacterEncoding("UTF-8");
         
         String searchValue = request.getParameter("txtSearchValue");
-        String url = SEARCH_PAGE;
+        
+        ServletContext context = this.getServletContext();
+        Properties properties = (Properties)context.getAttribute("SITE_MAP");
+        
+        String url = properties.getProperty(
+                        MyApplicationConstant.SearchFeatures.LOGIN_PAGE);
         
         try {
+            HttpSession session = request.getSession(false);
+            
+            if (session == null) {
+                return;
+            }
+            
             if (!searchValue.trim().isEmpty()) {
                 RegistrationDAO dao = new RegistrationDAO();
                 dao.searchFullName(searchValue);
                 
                 List<RegistrationDTO> result = dao.getAccountList();
                 request.setAttribute("SEARCH_RESULT", result);
-                url = SHOW_RESULT_PAGE;
+                url = properties.getProperty(
+                        MyApplicationConstant.SearchFeatures.SEARCH_PAGE);
             }
         } catch (SQLException ex) {
             log("SearchLastnameServlet_SQL: " + ex.getMessage());
@@ -59,6 +76,7 @@ public class SearchFullNameServlet extends HttpServlet {
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+            out.close();
         }
     }
 

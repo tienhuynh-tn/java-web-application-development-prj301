@@ -6,9 +6,12 @@
 package tienhlt.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import tienhlt.registration.RegistrationCreateError;
 import tienhlt.registration.RegistrationDAO;
 import tienhlt.registration.RegistrationDTO;
+import tienhlt.utils.MyApplicationConstant;
 
 /**
  *
@@ -24,8 +28,6 @@ import tienhlt.registration.RegistrationDTO;
  */
 @WebServlet(name = "SignUpServlet", urlPatterns = {"/SignUpServlet"})
 public class SignUpServlet extends HttpServlet {
-    private final String ERROR_PAGE = "signUp.jsp";
-    private final String LOGIN_PAGE = "login.html";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,6 +41,8 @@ public class SignUpServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        request.setCharacterEncoding("UTF-8");
         
         String username = request.getParameter("txtUsername");
         String password = request.getParameter("txtPassword");
@@ -48,10 +52,12 @@ public class SignUpServlet extends HttpServlet {
         String lastname = request.getParameter("txtLastname");
         boolean foundErr = false;
         RegistrationCreateError errors = new RegistrationCreateError();
-        String url = ERROR_PAGE;
         
-        System.out.println(firstname + " First");
-        System.out.println(lastname + " Last");
+        ServletContext context = this.getServletContext();
+        Properties properties = (Properties)context.getAttribute("SITE_MAP");
+        
+        String url = properties.getProperty(
+                        MyApplicationConstant.SignUpFeatures.SIGN_UP_JSP);
         
         try {
             //1. Check user constraint validation
@@ -92,7 +98,8 @@ public class SignUpServlet extends HttpServlet {
             boolean result = dao.createNewAcccount(dto);
             //2. If task is success, redirect to Login Page
             if (result) {
-                url = LOGIN_PAGE;
+                url = properties.getProperty(
+                        MyApplicationConstant.SignUpFeatures.LOGIN_PAGE);
             } //end if insert is success
         } catch (SQLException ex) {
             String msg = ex.getMessage();
@@ -107,6 +114,7 @@ public class SignUpServlet extends HttpServlet {
         finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+            out.close();
         }
     }
 

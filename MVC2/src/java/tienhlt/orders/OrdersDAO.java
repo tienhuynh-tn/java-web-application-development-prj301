@@ -53,37 +53,6 @@ public class OrdersDAO implements Serializable{
                 con.close();
             }
         }
-        return -1;
+        return 0;
     }
-    
-//    public boolean updateTotalOfOrder(int orderID, BigDecimal total) 
-//        throws SQLException, NamingException{
-//        Connection con = null;
-//        PreparedStatement stm = null;
-//        
-//        try {
-//            con = DBHelpers.makeConnection();
-//            if (con != null) {
-//                String sql = "Update Orders "
-//                        + "Set Total = ? "
-//                        + "Where OrderID = ?";
-//                stm = con.prepareStatement(sql);
-//                stm.setBigDecimal(1, total);
-//                stm.setInt(2, orderID);
-//                int rowAffected = stm.executeUpdate();
-//                if (rowAffected > 0) {
-//                    return true;
-//                }
-//                
-//            } //end if con connect success
-//        } finally {
-//            if (stm != null) {
-//                stm.close();
-//            }
-//            if (con != null) {
-//                con.close();
-//            }
-//        }
-//        return false;
-//    }
 }

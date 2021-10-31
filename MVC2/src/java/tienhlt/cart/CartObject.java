@@ -101,12 +101,33 @@ public class CartObject implements Serializable {
         int orderID = ordersDAO.createNewOrder(name, address, total);
         
         OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
-        List<OrderDetailsDTO> listOrderDetailsDTOs = addItemsToOrderDetailsDTO(checkedItems);
-        boolean result = orderDetailsDAO.inserItemsToOrderDetails(orderID, listOrderDetailsDTOs);
+        boolean result = orderDetailsDAO.createOrderDetails(orderID, checkedItems);
+        
         return result;
     }
     
-    public List<OrderDetailsDTO> addItemsToOrderDetailsDTO(Map<ProductDTO, Integer> checkedItems) {
+    public int getQuantityBySKU(String SKU) {
+        if (SKU == null || SKU.trim().isEmpty()) {
+            return 0;
+        }
+        
+        if (this.items == null) {
+            return 0;
+        }
+        
+        int quantity = 0;
+        
+        for (ProductDTO dto : this.items.keySet()) {
+            if (SKU.equals(dto.getSKU())) {
+                quantity = this.items.get(dto);
+                return quantity;
+            }
+        }
+        
+        return 0;
+    }
+    
+    public List<OrderDetailsDTO> addItemsToOrderDetailsDTO(Map<ProductDTO, Integer> checkedItems, int orderID) {
         List<OrderDetailsDTO> list = new ArrayList<>();
         
         for (ProductDTO productDTO : checkedItems.keySet()) {
@@ -118,10 +139,9 @@ public class CartObject implements Serializable {
             total = price.multiply(new BigDecimal(quantity));
             
             OrderDetailsDTO orderDetailsDTO = 
-                    new OrderDetailsDTO(SKU, name, price, quantity, total);
+                    new OrderDetailsDTO(orderID, SKU, name, price, quantity, total);
             
             list.add(orderDetailsDTO);
-            
         }
         
         return list;

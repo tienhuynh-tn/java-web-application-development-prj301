@@ -6,9 +6,12 @@
 package tienhlt.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Properties;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import tienhlt.cart.CartObject;
 import tienhlt.product.ProductDTO;
+import tienhlt.utils.MyApplicationConstant;
 
 /**
  *
@@ -37,6 +41,11 @@ public class RemoveBookFromCartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
+        ServletContext context = this.getServletContext();
+        Properties properties = (Properties)context.getAttribute("SITE_MAP");
+        
         try {
             //1. Cust goes to cart place
             HttpSession session = request.getSession(false); 
@@ -58,7 +67,6 @@ public class RemoveBookFromCartServlet extends HttpServlet {
                             //5. remove all selected items from cart
                             for (String item : selectedItem) {
                                 cart.removeItemFromCart(item);
-                                System.out.println(item + " RemoveBookFromCartServlet");
                             }
                             //6. update cart to cart place
                             session.setAttribute("CART", cart);
@@ -72,9 +80,15 @@ public class RemoveBookFromCartServlet extends HttpServlet {
             log("RemoveBookFromCartServlet_Naming: " + ex.getMessage());
         } finally {
             //7. Refresh viewing cart --> call view cart function again
-            String urlWriting = "DispatchServlet"
-                    + "?btAction=View Your Cart";
+//            String urlWriting = "DispatchServlet"
+//                    + "?btAction=Buy";
+//            String urlWriting = properties.getProperty(
+//                            MyApplicationConstant.RemoveBookFeatures.VIEW_CART_PAGE);
+//            String urlWriting = "DispatchServlet"
+//                    + "?btAction=View Your Cart";
+            String urlWriting = "viewCartPage";
             response.sendRedirect(urlWriting);
+            out.close();
         }
     }
 

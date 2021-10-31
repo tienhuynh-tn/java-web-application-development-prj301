@@ -6,9 +6,12 @@
 package tienhlt.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -16,14 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import tienhlt.registration.RegistrationDAO;
+import tienhlt.registration.RegistrationDTO;
+import tienhlt.utils.MyApplicationConstant;
 
 /**
  *
  * @author Huỳnh Lê Thủy Tiên <tien.huynhlt.tn@gmail.com>
  */
 public class LoginServlet extends HttpServlet {
-    private final String INVALID_PAGE = "invalid.html";
-    private final String SEARCH_PAGE = "search.jsp";
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,43 +40,56 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         
         String username = request.getParameter("txtUsername");
         String password = request.getParameter("txtPassword");
-        String url = INVALID_PAGE;
+        
+        ServletContext context = this.getServletContext();
+        Properties properties = (Properties)context.getAttribute("SITE_MAP");
+        
+        String url = properties.getProperty(
+                        MyApplicationConstant.LoginFeatures.INVALID);
         try {
             //call DAO
             RegistrationDAO dao = new RegistrationDAO();
             boolean result = dao.checkLogin(username, password);
 
             if (result) {
-                url = SEARCH_PAGE;
                 HttpSession session = request.getSession();
                 //Khi login thành công => người dùng muốn dùng nhiều hơn 1 
                 //feature của ứng dụng => PHẢI tạo session mới để lưu trữ thông
                 //tin người dùng
+                
+                String fullname = dao.showFullName(username); 
+                boolean isAdmin = dao.checkAdmin(username);
+                RegistrationDTO dto = dao.showProfile(username);
+                
                 session.setAttribute("USER", username);
-                //implement DAO to get fullname - Lastname
-                //session.setAttribute("FULLNAME", lastname)
-                String fullname = dao.showFullName(username);
                 session.setAttribute("FULL_NAME", fullname);
                 
-                //encrypt password
+                if (isAdmin) {
+                    session.setAttribute("ADMIN", username);
+                } else {
+                    session.setAttribute("SHOW_PROFILE", dto);
+                }
+                
                 Cookie cookie = new Cookie(username, password);
                 cookie.setMaxAge(60*3);
                 response.addCookie(cookie);
                 
-                String seusername = (String)session.getAttribute("USER");
-                System.out.println(seusername + " LoginServlet");
+                url = properties.getProperty(
+                        MyApplicationConstant.LoginFeatures.SEARCH_PAGE);
             }//end if authentication is successful
         } catch (NamingException ex) {
             log("LoginServlet_Naming: " + ex.getMessage());
         } catch (SQLException ex) {
             log("LoginServlet_SQL: " + ex.getMessage());
         } finally {
-//            response.sendRedirect(url);
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
+//            RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
+            out.close();
         }
     }
 

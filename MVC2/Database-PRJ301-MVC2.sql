@@ -40,13 +40,12 @@ GO
 
 CREATE TABLE OrderDetails
 (
-	OrderID int NOT NULL,
 	SKU varchar(20) NOT NULL,
 	Name nvarchar(50) NOT NULL,
 	Price money NOT NULL,
 	Quantity int NOT NULL,
 	Total money NOT NULL,
-	CONSTRAINT PK_OrderDetails PRIMARY KEY (OrderID),
+	OrderID int NOT NULL,
 
 	CONSTRAINT FK_OrderDetails_Orders 
 	FOREIGN KEY (OrderID) 
@@ -66,10 +65,11 @@ VALUES
 	('dat123', 'dat123', N'Đạt', N'Thành', N'Trần', 0),
 	('trung123', 'trung123', N'Trung', N'Duy Hiếu', N'Trần', 0),
 	('linh123', 'linh123', N'Linh', N'Anh', N'Đỗ', 0),
-	('thang123', 'thang123', N'Thắng', N'Ngọc', N'Thắng', 0),
+	('thang123', 'thang123', N'Thắng', N'Ngọc', N'Trần', 0),
 	('minh123', 'minh123', N'Minh', N'Đặng Gia', N'Lê', 0),
 	('huy123', 'huy123', N'Huy', N'Minh', N'Trần', 0),
-	('tuan123', 'tuan123', N'Tuấn', N'Vũ Anh', N'Lưu', 0)
+	('tuan123', 'tuan123', N'Tuấn', N'Vũ Anh', N'Lưu', 0),
+	('admin123', 'admin123', N'Project', '', N'Admin', 1)
 GO
 
 INSERT INTO Product (SKU, Name, Price, Description, Quantity)
@@ -84,4 +84,24 @@ VALUES
 	('BOOK00008', 'JDBC', '30000', 'JDBC Fundamental Book', 30),
 	('BOOK00009', 'Scripting Elements', '20000', 'Scripting Elements Fundamental Book', 20),
 	('BOOK00010', 'EL', '10000', 'EL Fundamental Book', 10)
+GO
+
+CREATE TRIGGER TR_OderDetails_Insert ON OrderDetails AFTER INSERT AS 
+BEGIN
+	DECLARE @orderID INT;
+	DECLARE @SKU VARCHAR(20);
+	DECLARE @orderDetailsQuantity INT;
+
+	SELECT @orderID = OrderID, @SKU = SKU, @orderDetailsQuantity = Quantity 
+	FROM inserted;
+
+	IF ((SELECT Quantity FROM Product WHERE SKU = @SKU) >= @orderDetailsQuantity)
+	BEGIN
+		UPDATE Product
+		SET Quantity = Quantity - @orderDetailsQuantity
+		WHERE SKU = @SKU
+	END
+	ELSE 
+		ROLLBACK TRAN;
+END
 GO

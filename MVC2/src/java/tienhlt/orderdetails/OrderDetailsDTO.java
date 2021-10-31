@@ -31,14 +31,6 @@ public class OrderDetailsDTO implements Serializable{
         this.quantity = quantity;
         this.total = total;
     }
-    
-    public OrderDetailsDTO(String SKU, String name, BigDecimal price, int quantity, BigDecimal total) {
-        this.SKU = SKU;
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-        this.total = total;
-    }
 
     /**
      * @return the orderID

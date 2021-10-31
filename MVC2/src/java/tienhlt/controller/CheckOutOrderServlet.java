@@ -6,10 +6,12 @@
 package tienhlt.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import tienhlt.cart.CartObject;
 import tienhlt.product.ProductDTO;
+import tienhlt.utils.MyApplicationConstant;
 
 /**
  *
@@ -25,8 +28,6 @@ import tienhlt.product.ProductDTO;
  */
 @WebServlet(name = "CheckOutOrderServlet", urlPatterns = {"/CheckOutOrderServlet"})
 public class CheckOutOrderServlet extends HttpServlet {
-    private final String VIEW_CART_PAGE = "viewCart.jsp";
-    private final String CHECK_OUT_SUCCESS_PAGE = "checkOutSuccess.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,11 +41,17 @@ public class CheckOutOrderServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         
         String name = request.getParameter("txtName");
         String address = request.getParameter("txtAdress");
         String total = request.getParameter("txtTotal");
-        String url = VIEW_CART_PAGE;
+        
+        ServletContext context = this.getServletContext();
+        Properties properties = (Properties)context.getAttribute("SITE_MAP");
+        
+        String url = properties.getProperty(
+                        MyApplicationConstant.CheckOutFeatures.CONFIRM_CHECK_OUT_PAGE);
         
         try {
             //1. Cust goes to cart place
@@ -57,26 +64,33 @@ public class CheckOutOrderServlet extends HttpServlet {
                     Map<ProductDTO, Integer> items 
                             = (Map<ProductDTO, Integer>)session.getAttribute("CHECK_OUT_ITEMS");
                     if (items != null) {
-                        boolean result = cart.checkOutItemsOfCart(name, address, total, items);
+                        boolean result = false;
+                        result = cart.checkOutItemsOfCart(name, address, total, items);
                         if (result) {
                             for (ProductDTO dto : items.keySet()) {
-                                cart.removeItemFromCart(dto.getSKU());
-                                System.out.println(dto.getSKU() + " CheckOutOrderServlet");
+                                    cart.removeItemFromCart(dto.getSKU());
                             }
-                            url = CHECK_OUT_SUCCESS_PAGE;
-//                            session.removeAttribute("CART");
+                            session.setAttribute("CART", cart);
                             session.removeAttribute("CHECK_OUT_ITEMS");
+                            url = properties.getProperty(
+                                    MyApplicationConstant.CheckOutFeatures.CHECK_OUT_SUCCESS_PAGE);
+                            }
                         }
                     }
                 }
-            }
         } catch (SQLException ex) {
             log("CheckOutOrderServlet_SQL: " + ex.getMessage());
         } catch (NamingException ex) {
             log("CheckOutOrderServlet_Naming: " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+//            RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
+            //7. refresh viewing cart ==> call view cart function
+//            String urlRewriting = "DispatchServlet?btAction=View Your Cart";
+            //không xài được RequestDispatcher vì bt action sẽ bị trùng
+//            response.sendRedirect(urlRewriting);
+            response.sendRedirect(url);
+            out.close();
         }
     }
 

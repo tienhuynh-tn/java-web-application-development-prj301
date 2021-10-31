@@ -12,13 +12,13 @@ For more information, please contact via my email: tien.huynhlt.tn@gmail.com
     </head>
     <body>
         <h1>Login Page</h1>
-        <form action="DispatchServlet" method="POST">
-            Username <input type="text" name="txtUsername" value="" required/> <br/>
-            Password <input type="password" name="txtPassword" value="" required/> <br/>
-            <input type="submit" value="Login" name="btAction" />
+        <form action="loginAction" method="POST">
+            Username <input type="text" name="txtUsername" value=""/> <br/>
+            Password <input type="password" name="txtPassword" value=""/> <br/>
+            <input type="submit" value="Login" />
             <input type="reset" value="Reset" />
         </form> <br/>
-        <a href="signUp.html">No account. Click here to sign up!</a> <br/>
-        <a href="DispatchServlet?btAction=Buy">Click here to buy books</a>
+        <a href="signUpPage">No account. Click here to sign up!</a> <br/>
+        <a href="showBookAction">Click here to buy books</a>
     </body>
 </html>

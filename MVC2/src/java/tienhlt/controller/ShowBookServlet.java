@@ -6,10 +6,13 @@
 package tienhlt.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,15 +20,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import tienhlt.product.ProductDAO;
 import tienhlt.product.ProductDTO;
+import tienhlt.utils.MyApplicationConstant;
 
 /**
  *
  * @author Huynh Le Thuy Tien
  */
-@WebServlet(name = "BuyBookServlet", urlPatterns = {"/BuyBookServlet"})
-public class BuyBookServlet extends HttpServlet {
-    private final String SHOPPING_PAGE = "shopping.jsp";
-    private final String LOGIN_PAGE = "login.html";
+@WebServlet(name = "ShowBookServlet", urlPatterns = {"/ShowBookServlet"})
+public class ShowBookServlet extends HttpServlet {
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,17 +40,22 @@ public class BuyBookServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         
-        String url = LOGIN_PAGE;
+        ServletContext context = this.getServletContext();
+        Properties properties = (Properties)context.getAttribute("SITE_MAP");
+        
+        String url = properties.getProperty(
+                        MyApplicationConstant.ShowBookFeatures.LOGIN_PAGE);
         try {
             ProductDAO dao = new ProductDAO();
             dao.showBookList();
             
             List<ProductDTO> dto = dao.getProductList();
             request.setAttribute("BOOK_LIST", dto);
-            url = SHOPPING_PAGE;
+            url = properties.getProperty(
+                    MyApplicationConstant.ShowBookFeatures.SHOPPING_PAGE);
         } catch (SQLException ex) {
             log("BuyBookServlet_SQL: " + ex.getMessage());
         } catch (NamingException ex) {
@@ -56,6 +63,7 @@ public class BuyBookServlet extends HttpServlet {
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+            out.close();
         }
     }
 

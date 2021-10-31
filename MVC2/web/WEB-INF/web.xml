@@ -4,9 +4,17 @@
         <param-name>SITE_MAP_LOCATION</param-name>
         <param-value>/WEB-INF/siteMaps.properties</param-value>
     </context-param>
+    <filter>
+        <filter-name>DispatchFilter</filter-name>
+        <filter-class>tienhlt.filter.DispatchFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>DispatchFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <listener>
         <description>ServletContextListener</description>
-        <listener-class>NewServletListener</listener-class>
+        <listener-class>tienhlt.listener.NewServletListener</listener-class>
     </listener>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -21,9 +29,9 @@
             30
         </session-timeout>
     </session-config>
-    <welcome-file-list>
+<!--    <welcome-file-list>
         <welcome-file>DispatchServlet</welcome-file>
-    </welcome-file-list>
+    </welcome-file-list>-->
     <resource-ref>
         <res-ref-name>tienhuynh-tn</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>

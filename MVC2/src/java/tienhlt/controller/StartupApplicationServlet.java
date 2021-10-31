@@ -6,9 +6,12 @@
 package tienhlt.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import tienhlt.registration.RegistrationDAO;
+import tienhlt.utils.MyApplicationConstant;
 
 /**
  *
@@ -24,8 +28,6 @@ import tienhlt.registration.RegistrationDAO;
  */
 @WebServlet(name = "StartupApplicationServlet", urlPatterns = {"/StartupApplicationServlet"})
 public class StartupApplicationServlet extends HttpServlet {
-    private final String LOGIN_PAGE = "login.html";
-    private final String SEARCH_PAGE = "search.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,28 +41,15 @@ public class StartupApplicationServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         
-        String url = LOGIN_PAGE;
+        ServletContext context = this.getServletContext();
+        Properties properties = (Properties)context.getAttribute("SITE_MAP");
         
+        String url = properties.getProperty(
+                        MyApplicationConstant.StartUpApp.LOGIN_PAGE);
         
         try {
-//            //1. Read cookies
-//            Cookie[] cookies = request.getCookies();
-//            if (cookies != null) {
-//                //2. Get last cookies
-//                Cookie lastCookie = cookies[cookies.length - 1];
-//                //3. Get username and password
-//                String username = lastCookie.getName();
-//                String password = lastCookie.getValue(); //decrypt or find hash key
-//                //4. Call DAO to checkLogin
-//                RegistrationDAO dao = new RegistrationDAO();
-//                boolean result = dao.checkLogin(username, password);
-//                
-//                if (result) {
-//                    url = SEARCH_PAGE;
-//                }//end if authentication is ok
-//            } //end if cookies has existed
-            
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
@@ -71,14 +60,16 @@ public class StartupApplicationServlet extends HttpServlet {
                     boolean result = dao.checkLogin(username, password);
 
                     if (result) {
-                        url = SEARCH_PAGE;
-                        HttpSession session = request.getSession();
                         String fullname = dao.showFullName(username);
+                        boolean isAdmin = dao.checkAdmin(username);
+                        
+                        HttpSession session = request.getSession();
                         session.setAttribute("USER", username);
                         session.setAttribute("FULL_NAME", fullname);
-
-                        String seusername = (String)session.getAttribute("USER");
-                        System.out.println(seusername + " startup");
+                        session.setAttribute("ADMIN", isAdmin);
+                        
+                        url = properties.getProperty(
+                                MyApplicationConstant.StartUpApp.SEARCH_PAGE);
                     }//end if authentication is ok
                 }//end for
             }//end if cookies has existed
@@ -87,8 +78,10 @@ public class StartupApplicationServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("StartupApplicationServlet_Naming: " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+//            RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
+            response.sendRedirect(url);
+            out.close();
         }
     }
 

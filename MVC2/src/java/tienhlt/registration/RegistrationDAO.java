@@ -252,4 +252,77 @@ public class RegistrationDAO implements Serializable {
         }
         return false;
     }
+    
+    public boolean checkAdmin(String username) 
+        throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try {
+            con = DBHelpers.makeConnection();
+            if (con != null) {
+                String sql = "Select isAdmin "
+                        + "From Registration "
+                        + "Where username = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    boolean isAdmin = rs.getBoolean("isAdmin");
+                    return isAdmin;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+    
+    public RegistrationDTO showProfile(String username) 
+        throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try {
+            con = DBHelpers.makeConnection();
+            if (con != null) {
+                String sql = "Select username, password, LastName + ' ' + MiddleName + ' ' + FirstName AS [Full Name], isAdmin "
+                        + "From Registration "
+                        + "Where username = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String userName = rs.getString("username");
+                    String password = rs.getString("password");
+                    String fullname = rs.getNString("Full Name");
+                    boolean role = rs.getBoolean("isAdmin");
+                    
+                    RegistrationDTO dto = new RegistrationDTO(userName, password, fullname, role);
+                    return dto;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();;
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return null;
+    } 
 }

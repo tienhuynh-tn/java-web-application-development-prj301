@@ -6,8 +6,11 @@
 package tienhlt.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Properties;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import tienhlt.cart.CartObject;
+import tienhlt.utils.MyApplicationConstant;
 
 /**
  *
@@ -22,7 +26,6 @@ import tienhlt.cart.CartObject;
  */
 @WebServlet(name = "AddBookToCartServlet", urlPatterns = {"/AddBookToCartServlet"})
 public class AddBookToCartServlet extends HttpServlet {
-    private final String ERROR_PAGE = "error.html";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,8 +39,14 @@ public class AddBookToCartServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         
-        String url = ERROR_PAGE;
+        //get current context
+        ServletContext context = this.getServletContext();
+        Properties properties = (Properties)context.getAttribute("SITE_MAP");
+        
+        String url = properties.getProperty(
+                MyApplicationConstant.AddBookToCartFeatures.ERROR_PAGE);
         
         try {
             //1. Cust goes to cart place
@@ -54,14 +63,17 @@ public class AddBookToCartServlet extends HttpServlet {
             //5. Update to cart place
             session.setAttribute("CART", cart);
             //6. Cust goes to shopping
-            url = "DispatchServlet"
-                    + "?btAction=Buy";
+//            url = "DispatchServlet"
+//                    + "?btAction=Buy";
+            url = properties.getProperty(
+                    MyApplicationConstant.AddBookToCartFeatures.SHOW_BOOK_CONTROLLER);
         } catch (SQLException ex) {
             log("AddBookToCartServlet_SQL: " + ex.getMessage());
         } catch (NamingException ex) {
             log("AddBookToCartServlet_Naming: " + ex.getMessage());
         } finally {
             response.sendRedirect(url);
+            out.close();
         }
     }
 

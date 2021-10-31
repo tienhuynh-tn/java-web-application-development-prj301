@@ -6,10 +6,13 @@
 package tienhlt.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import tienhlt.cart.CartObject;
 import tienhlt.product.ProductDTO;
+import tienhlt.utils.MyApplicationConstant;
 
 /**
  *
@@ -25,8 +29,6 @@ import tienhlt.product.ProductDTO;
  */
 @WebServlet(name = "ConfirmCheckOutServlet", urlPatterns = {"/ConfirmCheckOutServlet"})
 public class ConfirmCheckOutServlet extends HttpServlet {
-    private final String VIEW_CART_PAGE = "viewCart.jsp";
-    private final String CONFIRM_CHECK_OUT_PAGE = "confirmCheckOut.jsp";
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,8 +42,13 @@ public class ConfirmCheckOutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         
-        String url = VIEW_CART_PAGE;
+        ServletContext context = this.getServletContext();
+        Properties properties = (Properties)context.getAttribute("SITE_MAP");
+        
+        String url = properties.getProperty(
+                        MyApplicationConstant.ConfirmCheckOutFeatures.VIEW_CART_PAGE);
         
         try {
             HttpSession session = request.getSession(false); 
@@ -53,11 +60,9 @@ public class ConfirmCheckOutServlet extends HttpServlet {
                         String[] selectedItem = request.getParameterValues("chkCheckOut");
                         if (selectedItem != null) {
                             Map<ProductDTO, Integer> list = cart.showCheckedItems(selectedItem);
-                            for (ProductDTO dto : list.keySet()) {
-                                System.out.println(dto.getSKU() + " ConfirmCheckOutServlet");
-                            }
                             session.setAttribute("CHECK_OUT_ITEMS", list);
-                            url = CONFIRM_CHECK_OUT_PAGE;
+                            url = properties.getProperty(
+                                    MyApplicationConstant.ConfirmCheckOutFeatures.CONFIRM_CHECK_OUT_PAGE);
                         }
                     }
                 }
@@ -67,8 +72,10 @@ public class ConfirmCheckOutServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("ConfirmCheckOutServlet_Naming: " + ex.getMessage());
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+//            RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
+            response.sendRedirect(url);
+            out.close();
         }
     }
 

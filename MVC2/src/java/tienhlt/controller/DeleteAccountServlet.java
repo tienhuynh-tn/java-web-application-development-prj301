@@ -6,14 +6,19 @@
 package tienhlt.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Properties;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import tienhlt.registration.RegistrationDAO;
+import tienhlt.utils.MyApplicationConstant;
 
 /**
  *
@@ -21,7 +26,7 @@ import tienhlt.registration.RegistrationDAO;
  */
 @WebServlet(name = "DeleteAccountServlet", urlPatterns = {"/DeleteAccountServlet"})
 public class DeleteAccountServlet extends HttpServlet {
-    private final String ERROR_PAGE = "error.html";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,21 +39,39 @@ public class DeleteAccountServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         
         String username = request.getParameter("pk");
         String lastSearchValue = request.getParameter("lastSearchValue");
-        String url = ERROR_PAGE;
+        
+        ServletContext context = this.getServletContext();
+        Properties properties = (Properties)context.getAttribute("SITE_MAP");
+        
+        String url = properties.getProperty(
+                        MyApplicationConstant.DeleteFeatures.ERROR_PAGE);
         
         try {
+            HttpSession session = request.getSession(false);
+            
+            if (session == null) {
+                url = properties.getProperty(
+                        MyApplicationConstant.DeleteFeatures.LOGIN_PAGE);
+                return;
+            }
+            
             RegistrationDAO dao = new RegistrationDAO();
             boolean result = dao.deleteAccount(username);
             
             if (result) {
                 //call Search feature again
                 //using url rewriting technique
-                url = "DispatchServlet"
-                        + "?btAction=Search"
-                        + "&txtSearchValue=" + lastSearchValue;
+//                url = "DispatchServlet"
+//                        + "?btAction=Search"
+//                        + "&txtSearchValue=" + lastSearchValue;
+                url = properties.getProperty(
+                        MyApplicationConstant.DeleteFeatures.SEARCH_FULLNAME_CONTROLLER) 
+                        + "?txtSearchValue=" + lastSearchValue;
+//                url = "searchAction&txtSearchValue=" + lastSearchValue;
             }
         } catch (SQLException ex) {
             log("DeleteAccountServlet_SQL: " + ex.getMessage());
@@ -56,6 +79,7 @@ public class DeleteAccountServlet extends HttpServlet {
             log("DeleteAccountServlet_Naming: " + ex.getMessage());
         } finally {
             response.sendRedirect(url);
+            out.close();
         }
     }
 

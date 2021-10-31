@@ -6,16 +6,22 @@
 package tienhlt.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Properties;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import tienhlt.registration.RegistrationCreateError;
+import javax.servlet.http.HttpSession;
 import tienhlt.registration.RegistrationDAO;
+import tienhlt.registration.RegistrationDTO;
+import tienhlt.registration.RegistrationUpdateError;
+import tienhlt.utils.MyApplicationConstant;
 
 /**
  *
@@ -23,7 +29,6 @@ import tienhlt.registration.RegistrationDAO;
  */
 @WebServlet(name = "UpdateAccountServlet", urlPatterns = {"/UpdateAccountServlet"})
 public class UpdateAccountServlet extends HttpServlet {
-    private final String ERROR_PAGE = "error.html";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,6 +42,7 @@ public class UpdateAccountServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         
         String searchValue = request.getParameter("lastSearchValue");
         String username = request.getParameter("txtUsername");
@@ -47,30 +53,59 @@ public class UpdateAccountServlet extends HttpServlet {
             role = true;
         }
         boolean foundErr = false;
-        RegistrationCreateError errors = new RegistrationCreateError();
+        RegistrationUpdateError errors = new RegistrationUpdateError();
         
-        String url = ERROR_PAGE;
+        ServletContext context = this.getServletContext();
+        Properties properties = (Properties)context.getAttribute("SITE_MAP");
+        
+        String url = properties.getProperty(
+                        MyApplicationConstant.UpdateFeatures.ERROR_PAGE);
         
         try {
+            HttpSession session = request.getSession(false);
+            
+            if (session == null) {
+                url = properties.getProperty(
+                        MyApplicationConstant.UpdateFeatures.LOGIN_PAGE);
+                return;
+            }
+            
             if (password.trim().length() < 6 || password.trim().length() > 20) {
                 foundErr = true;
                 errors.setPasswordLengthViolent("Password requires from 6 to 20 chars");
             }
+            
             if (foundErr) {
                 request.setAttribute("UPDATE_ERR", errors);
-                url = "DispatchServlet"
-                        + "?btAction=Search"
-                        + "&txtSearchValue=" + searchValue;
+//                url = "DispatchServlet"
+//                        + "?btAction=Search"
+//                        + "&txtSearchValue=" + searchValue;
+//                url = "searchAction&txtSearchValue=" + searchValue;
+                url = properties.getProperty(
+                        MyApplicationConstant.DeleteFeatures.SEARCH_FULLNAME_CONTROLLER) 
+                        + "?txtSearchValue=" + searchValue;
                 return;
             }
+            
             password = password.trim();
             RegistrationDAO dao = new RegistrationDAO();
             boolean result = dao.updateAccount(username, password, role);
             
             if (result) {
-                url = "DispatchServlet"
-                        + "?btAction=Search"
-                        + "&txtSearchValue=" + searchValue;
+                if (username.equals(session.getAttribute("ADMIN"))) {
+                    if (role == false) {
+                        session.removeAttribute("ADMIN");
+                        RegistrationDTO dto = dao.showProfile(username);
+                        session.setAttribute("SHOW_PROFILE", dto);
+                    }
+                }
+//                url = "DispatchServlet"
+//                        + "?btAction=Search"
+//                        + "&txtSearchValue=" + searchValue;
+//                url = "searchAction&txtSearchValue=" + searchValue;
+                url = properties.getProperty(
+                        MyApplicationConstant.DeleteFeatures.SEARCH_FULLNAME_CONTROLLER) 
+                        + "?txtSearchValue=" + searchValue;
             }
             
         } catch (NamingException ex) {
@@ -78,9 +113,9 @@ public class UpdateAccountServlet extends HttpServlet {
         } catch (SQLException ex) {
             log("UpdateAccountServlet_Naming: " + ex.getMessage());
         } finally {
-//            response.sendRedirect(url);
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+            out.close();
         }
     }
 

@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -13,18 +14,29 @@
         <title>Confirm Check Out</title>
     </head>
     <body>
-        <c:set var="selectedItems" value="${paramValues.chkCheckOut}"/>
         <c:set var="cart" value="${sessionScope.CART}" />
+        
+        <!-- NOT EMPTY CART -->
         <c:if test="${not empty cart}">
             <c:set var="items" value="${cart.items}" />
+            
+            <!-- NOT EMPTY ITEMS -->
             <c:if test="${not empty items}">
                 <c:set var="list" value="${sessionScope.CHECK_OUT_ITEMS}" />
+                
+                <!-- NOT EMPTY LIST OF SELECTED ITEMS FOR CHECK-OUT -->
                 <c:if test="${not empty list}">
-                    <form action="DispatchServlet">
+                    <form action="checkOutAction">
                         <h1>Check Out Your Cart</h1>
-                        Name <span style="color: red">*</span> <input type="text" name="txtName" value="" required/> <br/>
-                        Address <span style="color: red">*</span> <input type="text" name="txtAdress" value="" required/> <br/>
-                        <input type="submit" value="Check Out" name="btAction" />
+                        Name <span style="color: red">*</span> 
+                        <input type="text" name="txtName" value="" required/> 
+                        <br/>
+                        
+                        Address <span style="color: red">*</span> 
+                        <input type="text" name="txtAdress" value="" required/> 
+                        <br/>
+                        
+                        <input type="submit" value="Check Out" />
                         
                         <table border="1">
                             <thead>
@@ -37,12 +49,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:set var="total" />
                                 <c:forEach var="item" items="${list}" varStatus="counter">
                                     <c:set var="dto" value="${item.key}" />
                                     <c:set var="quantity" value="${item.value}" />
                                     <c:set var="price" value="${dto.price}" />
-                                    <c:set var="total" value="${quantity * price}" />
+                                    <c:set var="total" value="${total + quantity * price}" />
                                     <tr>
                                         <td>
                                             ${counter.count}
@@ -57,7 +68,8 @@
                                             ${quantity}
                                         </td>
                                         <td>
-                                            ${price}
+                                            <fmt:formatNumber value="${price}" 
+                                                              maxFractionDigits="0"/>đ
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -66,20 +78,35 @@
                                         Total
                                     </td>
                                     <td>
-                                        ${total}
+                                        <fmt:formatNumber value="${total}" maxFractionDigits="0"/>đ
                                         <input type="hidden" name="txtTotal" value="${total}" />
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <a href="DispatchServlet?btAction=View Your Cart">Go Back To Your Cart</a> 
-                    </form>
+                    </form>          
+                </c:if>
+                
+                <!-- EMPTY LIST OF SELECTED ITEMS FOR CHECK-OUT -->
+                <c:if test="${empty list}">
+                    <h2>No Selected Items for CheckOut!</h2>
+                    <a href="viewCartPage">Go Back To Your Cart</a> 
                 </c:if>
             </c:if>
+            
+            <!-- EMPTY ITEMS -->
+            <c:if test="${empty items}">
+                <h2>No item existed in your cart</h2>
+                <a href="showBookAction">
+                    Click Here To Go Shopping!
+                </a>
+            </c:if>
         </c:if>
+        
+        <!-- EMPTY CART -->
         <c:if test="${empty cart}">
-            <h2>No item is selected to check out!!!</h2>
-            <a href="DispatchServlet?btAction=View Your Cart">Go Back To Your Cart</a>
+            <h2>No cart is existed</h2>
+            <a href="showBookAction">Click Here To Go Shopping!</a>
         </c:if>
     </body>
 </html>

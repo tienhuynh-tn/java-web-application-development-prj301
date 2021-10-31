@@ -6,6 +6,9 @@
 package tienhlt.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Properties;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import tienhlt.utils.MyApplicationConstant;
 
 /**
  *
@@ -20,8 +24,6 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
 public class LogoutServlet extends HttpServlet {
-    private final String LOGIN_PAGE = "login.html";
-    private final String DISPATCH_CONTROLLER = "DispatchServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,24 +37,15 @@ public class LogoutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         
-        String url = LOGIN_PAGE;
+        ServletContext context = this.getServletContext();
+        Properties properties = (Properties)context.getAttribute("SITE_MAP");
+        
+        String url = properties.getProperty(
+                        MyApplicationConstant.LogoutFeatures.LOGIN_PAGE);
         
         try {
-//            HttpSession session = request.getSession(false);
-//            
-//            if (session != null) {
-//                String username = (String)session.getAttribute("USER");
-//
-//                System.out.println(username + " Log out Servlet");
-//
-//                Cookie cookies = new Cookie(username, "");
-//                cookies.setMaxAge(0);
-//                response.addCookie(cookies);
-//
-//                session.invalidate();
-//                url = DISPATCH_CONTROLLER;
-//            }
             HttpSession session = request.getSession(false);
             
             if (session == null) {
@@ -61,18 +54,14 @@ public class LogoutServlet extends HttpServlet {
             
             String username = (String)session.getAttribute("USER");
             
-            System.out.println(username + " Log out Servlet");
-            
             Cookie cookies = new Cookie(username, "");
             cookies.setMaxAge(0);
             response.addCookie(cookies);
             
             session.invalidate();
-//            response.addHeader("Pragma", "no-cache");
-//            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-//            response.setDateHeader("Expires", 0);
         } finally {
             response.sendRedirect(url);
+            out.close();
         }
     }
 

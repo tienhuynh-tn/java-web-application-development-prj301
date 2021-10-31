@@ -13,29 +13,28 @@
         <title>Sign Up</title>
     </head>
     <body>
-        <%--request.setCharacterEncoding("UTF-8");--%>
         <h1>Create New Account</h1>
-        <form action="DispatchServlet" method="POST">
+        <form action="signUpAction" method="POST">
             <c:set var="errors" value="${requestScope.SIGNUPERRS}" />
-            Username* <input type="text" name="txtUsername" value="${param.txtUsername}" required/> {e.g. 6 - 30 chars} </br>
+            Username* <input type="text" name="txtUsername" value="${param.txtUsername}" /> {e.g. 6 - 30 chars} </br>
             <c:if test="${not empty errors.usernameLengthViolent}">
                 <font color="red">
                     ${errors.usernameLengthViolent}
                 </font> </br>
             </c:if>
-            Password* <input type="password" name="txtPassword" value="" required/> {e.g. 6 - 20 chars} </br>
+            Password* <input type="password" name="txtPassword" value="" /> {e.g. 6 - 20 chars} </br>
             <c:if test="${not empty errors.passwordLengthViolent}">
                 <font color="red">
                     ${errors.passwordLengthViolent}
                 </font> </br>
             </c:if>
-            Confirm* <input type="password" name="txtConfirm" value="" required/> </br>
+            Confirm* <input type="password" name="txtConfirm" value="" /> </br>
             <c:if test="${not empty errors.confirmNotMatch}">
                 <font color="red">
                     ${errors.confirmNotMatch}
                 </font> </br>
             </c:if>
-            First name* <input type="text" name="txtFirstname" value="${param.txtFirstname}" required/> {e.g. 2 - 50 chars} </br>
+            First name* <input type="text" name="txtFirstname" value="${param.txtFirstname}" /> {e.g. 2 - 50 chars} </br>
             <c:if test="${not empty errors.firstNameLengthViolent}">
                 <font color="red">
                     ${errors.firstNameLengthViolent}
@@ -47,16 +46,15 @@
                     ${errors.middleNameLengthViolent}
                 </font> </br>
             </c:if>
-            Last name* <input type="text" name="txtLastname" value="${param.txtLastname}" required/> {e.g. 2 - 50 chars} <br/>
+            Last name* <input type="text" name="txtLastname" value="${param.txtLastname}" /> {e.g. 2 - 50 chars} <br/>
             <c:if test="${not empty errors.lastNameLengthViolent}">
                 <font color="red">
                     ${errors.lastNameLengthViolent}
                 </font> </br>
             </c:if>
-            <input type="submit" value="Sign Up" name="btAction" />
+            <input type="submit" value="Sign Up" />
             <input type="reset" value="Reset" />
         </form> </br>
-        <%System.out.println(request.getParameter("txtFirstname") + " signUp.jsp");%>
         <c:if test="${not empty errors.usernameIsExisted}">
             <font color="red">
                 ${errors.usernameIsExisted}
