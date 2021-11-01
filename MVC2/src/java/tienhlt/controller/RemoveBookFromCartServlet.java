@@ -43,9 +43,6 @@ public class RemoveBookFromCartServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        ServletContext context = this.getServletContext();
-        Properties properties = (Properties)context.getAttribute("SITE_MAP");
-        
         try {
             //1. Cust goes to cart place
             HttpSession session = request.getSession(false); 
@@ -65,8 +62,8 @@ public class RemoveBookFromCartServlet extends HttpServlet {
                         String[] selectedItem = request.getParameterValues("chkItem");
                         if (selectedItem != null) {
                             //5. remove all selected items from cart
-                            for (String item : selectedItem) {
-                                cart.removeItemFromCart(item);
+                            for (String SKU : selectedItem) {
+                                cart.removeItemBySKU(SKU);
                             }
                             //6. update cart to cart place
                             session.setAttribute("CART", cart);
@@ -84,8 +81,7 @@ public class RemoveBookFromCartServlet extends HttpServlet {
 //                    + "?btAction=Buy";
 //            String urlWriting = "DispatchServlet"
 //                    + "?btAction=View Your Cart";
-            String url = properties.getProperty(
-                                    MyApplicationConstant.RemoveBookFeatures.VIEW_CART_PAGE);
+            String url = MyApplicationConstant.RemoveBookFeatures.VIEW_CART_PAGE;
             response.sendRedirect(url);
             out.close();
         }

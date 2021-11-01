@@ -8,10 +8,7 @@ package tienhlt.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -45,11 +42,7 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("txtUsername");
         String password = request.getParameter("txtPassword");
         
-        ServletContext context = this.getServletContext();
-        Properties properties = (Properties)context.getAttribute("SITE_MAP");
-        
-        String url = properties.getProperty(
-                        MyApplicationConstant.LoginFeatures.INVALID);
+        String url = MyApplicationConstant.LoginFeatures.INVALID;
         try {
             //call DAO
             RegistrationDAO dao = new RegistrationDAO();
@@ -78,17 +71,16 @@ public class LoginServlet extends HttpServlet {
                 cookie.setMaxAge(60*3);
                 response.addCookie(cookie);
                 
-                url = properties.getProperty(
-                        MyApplicationConstant.LoginFeatures.SEARCH_PAGE);
+                url = MyApplicationConstant.LoginFeatures.SEARCH_PAGE;
             }//end if authentication is successful
         } catch (NamingException ex) {
             log("LoginServlet_Naming: " + ex.getMessage());
         } catch (SQLException ex) {
             log("LoginServlet_SQL: " + ex.getMessage());
         } finally {
-//            response.sendRedirect(url);
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
+//            RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
             out.close();
         }
     }

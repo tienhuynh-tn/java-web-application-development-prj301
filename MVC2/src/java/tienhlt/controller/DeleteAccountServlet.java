@@ -44,18 +44,13 @@ public class DeleteAccountServlet extends HttpServlet {
         String username = request.getParameter("pk");
         String lastSearchValue = request.getParameter("lastSearchValue");
         
-        ServletContext context = this.getServletContext();
-        Properties properties = (Properties)context.getAttribute("SITE_MAP");
-        
-        String url = properties.getProperty(
-                        MyApplicationConstant.DeleteFeatures.ERROR_PAGE);
+        String url = MyApplicationConstant.DeleteFeatures.ERROR_PAGE;
         
         try {
             HttpSession session = request.getSession(false);
             
             if (session == null) {
-                url = properties.getProperty(
-                        MyApplicationConstant.DeleteFeatures.LOGIN_PAGE);
+                url = MyApplicationConstant.DeleteFeatures.LOGIN_PAGE;
                 return;
             }
             
@@ -68,8 +63,7 @@ public class DeleteAccountServlet extends HttpServlet {
 //                url = "DispatchServlet"
 //                        + "?btAction=Search"
 //                        + "&txtSearchValue=" + lastSearchValue;
-                url = properties.getProperty(
-                        MyApplicationConstant.DeleteFeatures.SEARCH_FULLNAME_CONTROLLER) 
+                url = MyApplicationConstant.DeleteFeatures.SEARCH_FULLNAME_CONTROLLER 
                         + "?txtSearchValue=" + lastSearchValue;
 //                url = "searchAction&txtSearchValue=" + lastSearchValue;
             }

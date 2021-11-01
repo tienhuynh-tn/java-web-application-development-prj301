@@ -10,7 +10,6 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import tienhlt.registration.RegistrationDAO;
+import tienhlt.registration.RegistrationDTO;
 import tienhlt.utils.MyApplicationConstant;
 
 /**
@@ -43,11 +43,7 @@ public class StartupApplicationServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        ServletContext context = this.getServletContext();
-        Properties properties = (Properties)context.getAttribute("SITE_MAP");
-        
-        String url = properties.getProperty(
-                        MyApplicationConstant.StartUpApp.LOGIN_PAGE);
+        String url = MyApplicationConstant.StartUpApp.LOGIN_PAGE;
         
         try {
             Cookie[] cookies = request.getCookies();
@@ -62,14 +58,19 @@ public class StartupApplicationServlet extends HttpServlet {
                     if (result) {
                         String fullname = dao.showFullName(username);
                         boolean isAdmin = dao.checkAdmin(username);
+                        RegistrationDTO dto = dao.showProfile(username);
                         
                         HttpSession session = request.getSession();
                         session.setAttribute("USER", username);
                         session.setAttribute("FULL_NAME", fullname);
-                        session.setAttribute("ADMIN", isAdmin);
                         
-                        url = properties.getProperty(
-                                MyApplicationConstant.StartUpApp.SEARCH_PAGE);
+                        if (isAdmin) {
+                            session.setAttribute("ADMIN", username);
+                        } else {
+                            session.setAttribute("SHOW_PROFILE", dto);
+                        }
+                        
+                        url = MyApplicationConstant.StartUpApp.SEARCH_PAGE;
                     }//end if authentication is ok
                 }//end for
             }//end if cookies has existed

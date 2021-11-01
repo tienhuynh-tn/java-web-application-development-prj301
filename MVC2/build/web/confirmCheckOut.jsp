@@ -12,101 +12,125 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Confirm Check Out</title>
+        <link rel="stylesheet" href="./css/base.css">
+        <link rel="stylesheet" href="./css/grid.css">
+        <link rel="stylesheet" href="./css/confirmCheckOutStyle.css">
     </head>
     <body>
-        <c:set var="cart" value="${sessionScope.CART}" />
+        <%--<c:set var="cart" value="${sessionScope.CART}" />
         
         <!-- NOT EMPTY CART -->
         <c:if test="${not empty cart}">
             <c:set var="items" value="${cart.items}" />
             
             <!-- NOT EMPTY ITEMS -->
-            <c:if test="${not empty items}">
-                <c:set var="list" value="${sessionScope.CHECK_OUT_ITEMS}" />
-                
-                <!-- NOT EMPTY LIST OF SELECTED ITEMS FOR CHECK-OUT -->
-                <c:if test="${not empty list}">
+            <c:if test="${not empty items}">--%>
+        <div class="container grid">
+            <c:set var="list" value="${sessionScope.CHECK_OUT_ITEMS}" />
+
+            <!-- NOT EMPTY LIST OF SELECTED ITEMS FOR CHECK-OUT -->
+            <c:if test="${not empty list}">
+                <div class="main row">
                     <form action="checkOutAction">
                         <h1>Check Out Your Cart</h1>
-                        Name <span style="color: red">*</span> 
-                        <input type="text" name="txtName" value="" required/> 
-                        <br/>
-                        
-                        Address <span style="color: red">*</span> 
-                        <input type="text" name="txtAdress" value="" required/> 
-                        <br/>
-                        
-                        <input type="submit" value="Check Out" />
-                        
-                        <table border="1">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>SKU</th>
-                                    <th>Name</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="item" items="${list}" varStatus="counter">
-                                    <c:set var="dto" value="${item.key}" />
-                                    <c:set var="quantity" value="${item.value}" />
-                                    <c:set var="price" value="${dto.price}" />
-                                    <c:set var="total" value="${total + quantity * price}" />
+                        <div class="user-info">
+                            <div class="item">
+                                <div class="title">
+                                    Name *
+                                </div>
+                                <div class="box">
+                                    <input type="text" name="txtName" value=""
+                                       class="text-box" required/> 
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="title">
+                                    Address *
+                                </div>
+                                <div class="box">
+                                    <input type="text" name="txtAdress" value="" 
+                                       class="text-box" required/> 
+                                </div>
+                            </div>
+                            <input type="submit" value="Check Out" class="btn" />
+                        </div>
+
+                        <div class="result">
+                            <table border="1">
+                                <thead>
                                     <tr>
-                                        <td>
-                                            ${counter.count}
+                                        <th>No.</th>
+                                        <th>SKU</th>
+                                        <th>Name</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="item" items="${list}" varStatus="counter">
+                                        <c:set var="dto" value="${item.key}" />
+                                        <c:set var="quantity" value="${item.value}" />
+                                        <c:set var="price" value="${dto.price}" />
+                                        <c:set var="total" value="${total + quantity * price}" />
+                                        <tr>
+                                            <td style="text-align: center">
+                                                ${counter.count}
+                                            </td>
+                                            <td>
+                                                ${dto.SKU}
+                                            </td>
+                                            <td>
+                                                ${dto.name}
+                                            </td>
+                                            <td style="text-align: center">
+                                                ${quantity}
+                                            </td>
+                                            <td>
+                                                <fmt:formatNumber value="${price}" 
+                                                                  maxFractionDigits="0"/>đ
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    <tr>
+                                        <td colspan="4" style="text-align: right">
+                                            Total
                                         </td>
                                         <td>
-                                            ${dto.SKU}
-                                        </td>
-                                        <td>
-                                            ${dto.name}
-                                        </td>
-                                        <td>
-                                            ${quantity}
-                                        </td>
-                                        <td>
-                                            <fmt:formatNumber value="${price}" 
-                                                              maxFractionDigits="0"/>đ
+                                            <fmt:formatNumber value="${total}" maxFractionDigits="0"/>đ
+                                            <input type="hidden" name="txtTotal" value="${total}" />
                                         </td>
                                     </tr>
-                                </c:forEach>
-                                <tr>
-                                    <td colspan="4" style="text-align: right">
-                                        Total
-                                    </td>
-                                    <td>
-                                        <fmt:formatNumber value="${total}" maxFractionDigits="0"/>đ
-                                        <input type="hidden" name="txtTotal" value="${total}" />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </form>          
-                </c:if>
-                
-                <!-- EMPTY LIST OF SELECTED ITEMS FOR CHECK-OUT -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>    
+                </div>
+            </c:if>
+
+            <!-- EMPTY LIST OF SELECTED ITEMS FOR CHECK-OUT -->
+            <div class="no-list row">
                 <c:if test="${empty list}">
-                    <h2>No Selected Items for CheckOut!</h2>
+                    <h2>No Selected Item for CheckOut!</h2>
                     <a href="viewCartPage">Go Back To Your Cart</a> 
                 </c:if>
-            </c:if>
-            
-            <!-- EMPTY ITEMS -->
-            <c:if test="${empty items}">
-                <h2>No item existed in your cart</h2>
-                <a href="showBookAction">
-                    Click Here To Go Shopping!
-                </a>
-            </c:if>
-        </c:if>
+            </div>
+        </div>
+
+        <%--
         
-        <!-- EMPTY CART -->
-        <c:if test="${empty cart}">
-            <h2>No cart is existed</h2>
-            <a href="showBookAction">Click Here To Go Shopping!</a>
+        <!-- EMPTY ITEMS -->
+        <c:if test="${empty items}">
+            <h2>No item existed in your cart</h2>
+            <a href="showBookAction">
+                Click Here To Go Shopping!
+            </a>
         </c:if>
+    </c:if>
+    
+    <!-- EMPTY CART -->
+    <c:if test="${empty cart}">
+        <h2>No cart is existed</h2>
+        <a href="showBookAction">Click Here To Go Shopping!</a>
+    </c:if>--%>
     </body>
 </html>

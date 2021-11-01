@@ -1,0 +1,104 @@
+/*
+© 2021 tienhuynh.lttn
+All rights reserved!
+For more information, please contact via my email: tien.huynhlt.tn@gmail.com
+*/
+/* 
+    Created on : Nov 2, 2021, 1:14:10 AM
+    Author     : Huynh Le Thuy Tien
+*/
+
+.container {
+    color: #241f4d;
+    padding: 50px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.result {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.btn{
+    color: #fff;
+    background-color: #241f4d;
+    text-decoration: none;
+    padding: 11px 16px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+.btn:hover{
+    background-color: #ccc;
+    color: #241f4d;
+}
+
+h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 3.0rem;
+    font-weight: 700;
+    margin: 20px auto;
+}
+
+table {
+    border-collapse: collapse;
+    font-size: 1.6rem;
+    margin: 20px auto;
+}
+
+table th {
+    font-weight: bolder;
+    padding: 10px 10px;
+    font-size: 1.8rem;
+}
+
+table td {
+    padding: 6px 10px;
+}
+
+a {
+    font-size: 1.4rem;
+    margin: 2px;
+}
+
+a:hover {
+    color: blue;
+}
+
+a:visited {
+    color: #241f4d;
+}
+
+h2 {
+    font-size: 1.4rem;
+}
+
+.no-cart, .no-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

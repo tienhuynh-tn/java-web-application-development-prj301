@@ -1,0 +1,22 @@
+/*
+© 2021 tienhuynh.lttn
+All rights reserved!
+For more information, please contact via my email: tien.huynhlt.tn@gmail.com
+*/
+/* 
+    Created on : Nov 1, 2021, 5:38:47 PM
+    Author     : Huynh Le Thuy Tien
+*/
+
+* {
+    box-sizing: inherit;
+}
+
+html {
+    /* 1rem = 10px */
+    font-size: 62.5%; 
+    line-height: 1.6rem;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+}

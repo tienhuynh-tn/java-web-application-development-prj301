@@ -64,7 +64,6 @@ public class ConfirmDeleteServlet extends HttpServlet {
                 return;
             }
             
-            
             session.setAttribute("SHOW_PROFILE", dto);
             url = properties.getProperty(
                     MyApplicationConstant.ConfirmDeleteFetures.CONFIRM_DELETE_PAGE);

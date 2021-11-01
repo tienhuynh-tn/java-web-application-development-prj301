@@ -32,7 +32,7 @@ public class OrderDetailsDAO implements Serializable {
             throws SQLException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
-
+        
         try {
             con = DBHelpers.makeConnection();
             if (con != null) {

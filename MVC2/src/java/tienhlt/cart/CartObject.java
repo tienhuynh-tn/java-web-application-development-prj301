@@ -58,7 +58,7 @@ public class CartObject implements Serializable {
         this.items.put(dto, quantity);
     }
     
-    public void removeItemFromCart(String SKU) 
+    public void removeItemBySKU(String SKU) 
         throws SQLException, NamingException{
         //1. checking items has existed
         if (this.items == null) {
@@ -104,19 +104,23 @@ public class CartObject implements Serializable {
         return list;
     }
     
-    public boolean checkOutItemsOfCart(String name, String address, String total, Map<ProductDTO, Integer> checkedItems) 
+    public int checkOutItemsOfCart(String name, String address, String total, Map<ProductDTO, Integer> checkedItems) 
         throws SQLException, NamingException{
         if (this.items == null) {
-            return false;
+            return -1;
         }
         
         OrdersDAO ordersDAO = new OrdersDAO();
         int orderID = ordersDAO.createNewOrder(name, address, total);
         
-        OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
-        boolean result = orderDetailsDAO.createOrderDetails(orderID, checkedItems);
-        
-        return result;
+        if (orderID > 0) {
+            OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
+            boolean result = orderDetailsDAO.createOrderDetails(orderID, checkedItems);
+            if (result) {
+                return orderID;
+            }
+        }
+        return -1;
     }
     
     public int getQuantityBySKU(String SKU) {

@@ -8,9 +8,7 @@ package tienhlt.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,12 +39,7 @@ public class AddBookToCartServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        //get current context
-        ServletContext context = this.getServletContext();
-        Properties properties = (Properties)context.getAttribute("SITE_MAP");
-        
-        String url = properties.getProperty(
-                MyApplicationConstant.AddBookToCartFeatures.ERROR_PAGE);
+        String url = MyApplicationConstant.AddBookToCartFeatures.ERROR_PAGE;
         
         try {
             //1. Cust goes to cart place
@@ -65,8 +58,7 @@ public class AddBookToCartServlet extends HttpServlet {
             //6. Cust goes to shopping
 //            url = "DispatchServlet"
 //                    + "?btAction=Buy";
-            url = properties.getProperty(
-                    MyApplicationConstant.AddBookToCartFeatures.SHOW_BOOK_CONTROLLER);
+            url = MyApplicationConstant.AddBookToCartFeatures.SHOW_BOOK_CONTROLLER;
         } catch (SQLException ex) {
             log("AddBookToCartServlet_SQL: " + ex.getMessage());
         } catch (NamingException ex) {

@@ -39,11 +39,7 @@ public class LogoutServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        ServletContext context = this.getServletContext();
-        Properties properties = (Properties)context.getAttribute("SITE_MAP");
-        
-        String url = properties.getProperty(
-                        MyApplicationConstant.LogoutFeatures.LOGIN_PAGE);
+        String url = MyApplicationConstant.LogoutFeatures.LOGIN_PAGE;
         
         try {
             HttpSession session = request.getSession(false);

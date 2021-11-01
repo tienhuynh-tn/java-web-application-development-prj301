@@ -8,6 +8,7 @@ package tienhlt.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.naming.NamingException;
@@ -19,6 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import tienhlt.cart.CartObject;
+import tienhlt.orderdetails.OrderDetailsDTO;
+import tienhlt.orders.OrdersDAO;
+import tienhlt.orders.OrdersDTO;
 import tienhlt.product.ProductDTO;
 import tienhlt.utils.MyApplicationConstant;
 
@@ -47,11 +51,7 @@ public class CheckOutOrderServlet extends HttpServlet {
         String address = request.getParameter("txtAdress");
         String total = request.getParameter("txtTotal");
         
-        ServletContext context = this.getServletContext();
-        Properties properties = (Properties)context.getAttribute("SITE_MAP");
-        
-        String url = properties.getProperty(
-                        MyApplicationConstant.CheckOutFeatures.CONFIRM_CHECK_OUT_PAGE);
+        String url = MyApplicationConstant.CheckOutFeatures.CONFIRM_CHECK_OUT_PAGE;
         
         try {
             //1. Cust goes to cart place
@@ -64,16 +64,24 @@ public class CheckOutOrderServlet extends HttpServlet {
                     Map<ProductDTO, Integer> items 
                             = (Map<ProductDTO, Integer>)session.getAttribute("CHECK_OUT_ITEMS");
                     if (items != null) {
-                        boolean result = false;
-                        result = cart.checkOutItemsOfCart(name, address, total, items);
-                        if (result) {
+                        int orderID = 
+                                cart.checkOutItemsOfCart(name, address, total, items);
+                        if (orderID > 0) {
+                            OrdersDAO ordersDAO = new OrdersDAO();
+                            OrdersDTO ordersDTO = ordersDAO.getOrders(orderID);
+                            
+                            List<OrderDetailsDTO> orderDetailsDTO = 
+                                    cart.addItemsToOrderDetailsDTO(items, orderID);
+                            
                             for (ProductDTO dto : items.keySet()) {
                                     cart.removeItemsForCheckOut(dto);
                             }
+                            
+                            session.setAttribute("ORDER", ordersDTO);
+                            session.setAttribute("LIST_ORDER_DETAILS", orderDetailsDTO);
                             session.setAttribute("CART", cart);
                             session.removeAttribute("CHECK_OUT_ITEMS");
-                            url = properties.getProperty(
-                                    MyApplicationConstant.CheckOutFeatures.CHECK_OUT_SUCCESS_PAGE);
+                            url = MyApplicationConstant.CheckOutFeatures.CHECK_OUT_SUCCESS_PAGE;
                             }
                         }
                     }

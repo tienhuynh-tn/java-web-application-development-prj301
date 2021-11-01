@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,11 +43,7 @@ public class ConfirmCheckOutServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        ServletContext context = this.getServletContext();
-        Properties properties = (Properties)context.getAttribute("SITE_MAP");
-        
-        String url = properties.getProperty(
-                        MyApplicationConstant.ConfirmCheckOutFeatures.VIEW_CART_PAGE);
+        String url = MyApplicationConstant.ConfirmCheckOutFeatures.VIEW_CART_PAGE;
         
         try {
             HttpSession session = request.getSession(false); 
@@ -61,8 +56,7 @@ public class ConfirmCheckOutServlet extends HttpServlet {
                         if (selectedItem != null) {
                             Map<ProductDTO, Integer> list = cart.showCheckedItems(selectedItem);
                             session.setAttribute("CHECK_OUT_ITEMS", list);
-                            url = properties.getProperty(
-                                    MyApplicationConstant.ConfirmCheckOutFeatures.CONFIRM_CHECK_OUT_PAGE);
+                            url = MyApplicationConstant.ConfirmCheckOutFeatures.CONFIRM_CHECK_OUT_PAGE;
                         }
                     }
                 }

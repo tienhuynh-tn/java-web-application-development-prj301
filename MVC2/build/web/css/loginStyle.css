@@ -1,0 +1,102 @@
+/*
+© 2021 tienhuynh.lttn
+All rights reserved!
+For more information, please contact via my email: tien.huynhlt.tn@gmail.com
+*/
+/* 
+    Created on : Nov 1, 2021, 5:41:38 PM
+    Author     : Huynh Le Thuy Tien
+*/
+
+html {
+    background-image: url(../img/login-background.png);
+    background-position: center;
+    background-size: cover;
+}
+
+.container {
+    color: #241f4d;
+    width: 350px;
+    height: 450px;
+    margin: 80px auto;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+}
+
+h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 3.0rem;
+    font-weight: 700;
+    margin: 30px auto;
+}
+
+.main {
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size: 1.6rem;
+    margin: 8px 0;
+    font-weight: bolder;
+}
+
+.text-box {
+    border: 1px solid #ccc;
+    width: 100%;
+    font-size: 15px;
+    padding: 10px;
+    margin-bottom: 24px;
+}
+
+.text-box:focus {
+    border: 1px solid #000;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.btn{
+    color: #fff;
+    background-color: #241f4d;
+    text-decoration: none;
+    padding: 11px 16px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+.btn:hover{
+    background-color: #ccc;
+    color: #241f4d;
+}
+
+.footer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin: 12px auto;
+}
+
+a {
+    font-size: 1.2rem;
+    margin: 2px;
+}
+
+a:hover {
+    color: blue;
+}
+
+a:visited {
+    color: #241f4d;
+}

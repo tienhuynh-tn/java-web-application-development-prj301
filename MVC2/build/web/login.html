@@ -6,19 +6,38 @@ For more information, please contact via my email: tien.huynhlt.tn@gmail.com
 -->
 <html>
     <head>
-        <title>Login</title>
+        <title>Login Page</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./css/base.css">
+        <link rel="stylesheet" href="./css/grid.css">  
+        <link rel="stylesheet" href="./css/loginStyle.css" >
     </head>
     <body>
-        <h1>Login Page</h1>
-        <form action="loginAction" method="POST">
-            Username <input type="text" name="txtUsername" value=""/> <br/>
-            Password <input type="password" name="txtPassword" value=""/> <br/>
-            <input type="submit" value="Login" />
-            <input type="reset" value="Reset" />
-        </form> <br/>
-        <a href="signUpPage">No account. Click here to sign up!</a> <br/>
-        <a href="showBookAction">Click here to buy books</a>
+        <div class="container">
+            <div class="grid">
+                <div class="row">
+                    <h1>Login</h1>
+                </div>
+    
+                <div class="main row">
+                    <form action="loginAction" method="POST">
+                        <div class="title">Username</div> 
+                        <input type="text" name="txtUsername" value="" class="text-box"/> <br/>
+                        <div class="title">Password</div> 
+                        <input type="password" name="txtPassword" value="" class="text-box"/> <br/>
+                        <div class="button">
+                            <input type="submit" value="Login" class="btn" />
+                            <input type="reset" value="Reset" class="btn" />
+                        </div>
+                    </form>
+                </div>
+    
+                <div class="footer row">
+                    <a href="signUpPage">Don't have account? Sign Up!</a>
+                    <a href="showBookAction">Click here to buy books</a>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
