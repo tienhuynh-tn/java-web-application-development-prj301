@@ -120,6 +120,4 @@ public class RegistrationCreateError implements Serializable{
     public void setConfirmNotMatch(String confirmNotMatch) {
         this.confirmNotMatch = confirmNotMatch;
     }
-
-    
 }

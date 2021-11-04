@@ -17,6 +17,31 @@ For more information, please contact via my email: tien.huynhlt.tn@gmail.com
     justify-content: center;
 }
 
+h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 3.0rem;
+    font-weight: 700;
+    margin: 20px auto;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    border: 2px solid #241f4d;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.info {
+    font-size: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center
+}
+
 .button {
     display: flex;
     align-items: center;
@@ -41,14 +66,6 @@ For more information, please contact via my email: tien.huynhlt.tn@gmail.com
     color: #241f4d;
 }
 
-h1 {
-    width: 100%;
-    text-align: center;
-    font-size: 3.0rem;
-    font-weight: 700;
-    margin: 20px auto;
-}
-
 .cancel {
     color: #fff;
     background-color: #241f4d;
@@ -66,16 +83,6 @@ h1 {
     color: #241f4d;
 }
 
-.profile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-    border: 2px solid #241f4d;
-    border-radius: 20px;
-    margin: 20px;
-}
-
 img {
     margin: 10px;
     padding: 2px;
@@ -85,10 +92,15 @@ img {
     border: 5px solid #241f4d;
 }
 
-.info {
-    font-size: 1.6rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center
+a {
+    font-size: 1.2rem;
+    margin: 2px;
 }
 
+a:hover {
+    color: darkblue;
+}
+
+a:visited {
+    color: #241f4d;
+}

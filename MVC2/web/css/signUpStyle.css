@@ -9,7 +9,7 @@ For more information, please contact via my email: tien.huynhlt.tn@gmail.com
 */
 
 html {
-    background-image: url(../img/sign-up-background.png);
+    background-image: url(sign-up-background);
     background-position: center;
     background-size: cover;
 }
@@ -72,6 +72,13 @@ form {
     border: 1px solid #000;
 }
 
+.footer {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin: 12px auto 4px;
+}
+
 .button {
     display: flex;
     align-items: center;
@@ -93,13 +100,6 @@ form {
 .btn:hover{
     background-color: #ccc;
     color: #241f4d;
-}
-
-.footer {
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    margin: 12px auto 4px;
 }
 
 a {

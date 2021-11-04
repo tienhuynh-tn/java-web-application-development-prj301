@@ -17,6 +17,14 @@ For more information, please contact via my email: tien.huynhlt.tn@gmail.com
     justify-content: center;
 }
 
+h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 3.0rem;
+    font-weight: 700;
+    margin: 20px auto;
+}
+
 .result {
     width: 90%;
     display: flex;
@@ -32,10 +40,20 @@ form {
     justify-content: center;
 }
 
-.button {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+table {
+    border-collapse: collapse;
+    font-size: 1.6rem;
+    margin: 20px auto;
+}
+
+table th {
+    font-weight: bolder;
+    padding: 10px 10px;
+    font-size: 1.8rem;
+}
+
+table td {
+    padding: 6px 10px;
 }
 
 .btn{
@@ -55,28 +73,15 @@ form {
     color: #241f4d;
 }
 
-h1 {
-    width: 100%;
-    text-align: center;
-    font-size: 3.0rem;
-    font-weight: 700;
-    margin: 20px auto;
+.no-cart, .no-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-table {
-    border-collapse: collapse;
-    font-size: 1.6rem;
-    margin: 20px auto;
-}
-
-table th {
-    font-weight: bolder;
-    padding: 10px 10px;
-    font-size: 1.8rem;
-}
-
-table td {
-    padding: 6px 10px;
+h2 {
+    font-size: 1.4rem;
 }
 
 a {
@@ -92,13 +97,5 @@ a:visited {
     color: #241f4d;
 }
 
-h2 {
-    font-size: 1.4rem;
-}
 
-.no-cart, .no-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+

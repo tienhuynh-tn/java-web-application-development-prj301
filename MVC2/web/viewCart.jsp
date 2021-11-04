@@ -12,9 +12,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cart</title>
-        <link rel="stylesheet" href="./css/base.css">
-        <link rel="stylesheet" href="./css/grid.css">
-        <link rel="stylesheet" href="./css/viewCartStyle.css">
+        <link rel="stylesheet" href="base">
+        <link rel="stylesheet" href="grid">
+        <link rel="stylesheet" href="viewCartStyle">
     </head>
     <body>
         <div class="container grid">

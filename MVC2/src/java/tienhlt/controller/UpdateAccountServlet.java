@@ -82,7 +82,6 @@ public class UpdateAccountServlet extends HttpServlet {
 //                url = "DispatchServlet"
 //                        + "?btAction=Search"
 //                        + "&txtSearchValue=" + searchValue;
-//                url = "searchAction&txtSearchValue=" + searchValue;
                 url = properties.getProperty(
                         MyApplicationConstant.DeleteFeatures.SEARCH_FULLNAME_CONTROLLER) 
                         + "?txtSearchValue=" + searchValue;
@@ -94,9 +93,9 @@ public class UpdateAccountServlet extends HttpServlet {
             boolean result = dao.updateAccount(username, password, role);
             
             if (result) {
-                if (username.equals(session.getAttribute("ADMIN"))) {
+                if (username.equals(session.getAttribute("USER"))) {
                     if (role == false) {
-                        session.removeAttribute("ADMIN");
+                        session.setAttribute("ADMIN", role);
                         RegistrationDTO dto = dao.showProfile(username);
                         session.setAttribute("SHOW_PROFILE", dto);
                     }
@@ -104,7 +103,6 @@ public class UpdateAccountServlet extends HttpServlet {
 //                url = "DispatchServlet"
 //                        + "?btAction=Search"
 //                        + "&txtSearchValue=" + searchValue;
-//                url = "searchAction&txtSearchValue=" + searchValue;
                 url = properties.getProperty(
                         MyApplicationConstant.DeleteFeatures.SEARCH_FULLNAME_CONTROLLER) 
                         + "?txtSearchValue=" + searchValue;

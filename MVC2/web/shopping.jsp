@@ -12,9 +12,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Book Store</title>
-        <link rel="stylesheet" href="./css/base.css">
-        <link rel="stylesheet" href="./css/grid.css">
-        <link rel="stylesheet" href="./css/shoppingStyle.css">
+        <link rel="stylesheet" href="base">
+        <link rel="stylesheet" href="grid">
+        <link rel="stylesheet" href="shoppingStyle">
     </head>
     <body>
         <div class="container grid">
@@ -101,7 +101,7 @@
                 </form>
             </div>
 
-            <div class="no-book row">
+            <div class="row">
                 <c:if test="${empty result}">
                     <h2>No book is in store!</h2>
                 </c:if>

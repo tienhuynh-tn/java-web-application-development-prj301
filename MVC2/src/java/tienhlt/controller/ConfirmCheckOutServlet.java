@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -66,8 +64,6 @@ public class ConfirmCheckOutServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("ConfirmCheckOutServlet_Naming: " + ex.getMessage());
         } finally {
-//            RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
             response.sendRedirect(url);
             out.close();
         }

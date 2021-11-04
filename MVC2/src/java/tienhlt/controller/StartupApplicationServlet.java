@@ -8,9 +8,7 @@ package tienhlt.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -65,8 +63,9 @@ public class StartupApplicationServlet extends HttpServlet {
                         session.setAttribute("FULL_NAME", fullname);
                         
                         if (isAdmin) {
-                            session.setAttribute("ADMIN", username);
+                            session.setAttribute("ADMIN", isAdmin);
                         } else {
+                            session.setAttribute("ADMIN", isAdmin);
                             session.setAttribute("SHOW_PROFILE", dto);
                         }
                         
@@ -79,8 +78,6 @@ public class StartupApplicationServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("StartupApplicationServlet_Naming: " + ex.getMessage());
         } finally {
-//            RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
             response.sendRedirect(url);
             out.close();
         }

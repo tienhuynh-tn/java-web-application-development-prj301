@@ -17,10 +17,62 @@ For more information, please contact via my email: tien.huynhlt.tn@gmail.com
     justify-content: center;
 }
 
+h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 3.0rem;
+    font-weight: 700;
+    margin: 20px auto;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+.receipt {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.receipt-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    align-self: center;
+}
+
+.store-name {
+    font-size: 1.6rem;
+    font-weight: bolder;
+}
+
+.info {
+    font-size: 1.4rem;
+}
+
 .result {
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+table {
+    border-collapse: collapse;
+    font-size: 1.6rem;
+    margin: 20px auto;
+}
+
+table th {
+    font-weight: bolder;
+    padding: 10px 10px;
+    font-size: 1.8rem;
+}
+
+table td {
+    padding: 6px 10px;
 }
 
 .button {
@@ -46,62 +98,3 @@ For more information, please contact via my email: tien.huynhlt.tn@gmail.com
     background-color: #ccc;
     color: #241f4d;
 }
-
-h1 {
-    width: 100%;
-    text-align: center;
-    font-size: 3.0rem;
-    font-weight: 700;
-    margin: 20px auto;
-}
-
-table {
-    border-collapse: collapse;
-    font-size: 1.6rem;
-    margin: 20px auto;
-}
-
-table th {
-    font-weight: bolder;
-    padding: 10px 10px;
-    font-size: 1.8rem;
-}
-
-table td {
-    padding: 6px 10px;
-}
-
-.store-name {
-    font-size: 1.6rem;
-}
-
-h2 {
-    font-size: 2rem;
-}
-
-.info {
-    font-size: 1.4rem;
-}
-
-.receipt {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-}
-
-.receipt-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    align-self: center;
-}
-
-.store-name {
-    font-size: 1.6rem;
-    font-weight: bolder;
-}
-
-
-

@@ -104,7 +104,8 @@ public class CartObject implements Serializable {
         return list;
     }
     
-    public int checkOutItemsOfCart(String name, String address, String total, Map<ProductDTO, Integer> checkedItems) 
+    public int checkOutItemsOfCart(String name, String address, String total, 
+            Map<ProductDTO, Integer> checkedItems) 
         throws SQLException, NamingException{
         if (this.items == null) {
             return -1;
@@ -115,7 +116,8 @@ public class CartObject implements Serializable {
         
         if (orderID > 0) {
             OrderDetailsDAO orderDetailsDAO = new OrderDetailsDAO();
-            boolean result = orderDetailsDAO.createOrderDetails(orderID, checkedItems);
+            boolean result = 
+                    orderDetailsDAO.createOrderDetails(orderID, checkedItems);
             if (result) {
                 return orderID;
             }
@@ -144,7 +146,8 @@ public class CartObject implements Serializable {
         return 0;
     }
     
-    public List<OrderDetailsDTO> addItemsToOrderDetailsDTO(Map<ProductDTO, Integer> checkedItems, int orderID) {
+    public List<OrderDetailsDTO> addItemsToOrderDetailsDTO
+        (Map<ProductDTO, Integer> checkedItems, int orderID) {
         List<OrderDetailsDTO> list = new ArrayList<>();
         
         for (ProductDTO productDTO : checkedItems.keySet()) {

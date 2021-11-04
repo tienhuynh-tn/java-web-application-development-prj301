@@ -12,22 +12,23 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Success</title>
-        <link rel="stylesheet" href="./css/base.css">
-        <link rel="stylesheet" href="./css/grid.css">
-        <link rel="stylesheet" href="./css/checkOutSuccessStyle.css">
+        <link rel="stylesheet" href="base">
+        <link rel="stylesheet" href="grid">
+        <link rel="stylesheet" href="checkOutSuccessStyle">
     </head>
     <body>
+        <c:set var="order" value="${sessionScope.ORDER}" />
         <div class="container grid">
-            <div class="row">
-                <h1>Check Out Success</h1>
-            </div>
-            <div class="row">
-                <h2>Your Receipt</h2>
-            </div>
+            <c:if test="${not empty order}">
+                <div class="row">
+                    <h1>Check Out Success</h1>
+                </div>
 
-            <c:set var="order" value="${sessionScope.ORDER}" />
-            <div class="receipt row">
-                <c:if test="${not empty order}">
+                <div class="row">
+                    <h2>Your Receipt</h2>
+                </div>
+
+                <div class="receipt row">
                     <c:set var="orderDetails" value="${sessionScope.LIST_ORDER_DETAILS}" />
                     <c:if test="${not empty orderDetails}">
                         <div class="receipt-info">
@@ -89,17 +90,32 @@
                             </table>
                         </div>
                     </c:if>
-                </c:if>
-            </div>
+                </div>
 
-            <div class="button row">
-                <a href="showBookAction">
-                    <input type="submit" value="Go Shopping" class="btn" />
-                </a>
-                <a href="viewCartPage">
-                    <input type="submit" value="View Cart" class="btn" />
-                </a>
-            </div>
+                <div class="button row">
+                    <a href="showBookAction">
+                        <input type="submit" value="Go Shopping" class="btn" />
+                    </a>
+                    <a href="viewCartPage">
+                        <input type="submit" value="View Cart" class="btn" />
+                    </a>
+                </div>
+            </c:if>
+            
+            <c:if test="${empty order}">
+                <div class="row">
+                    <h1>No invoice created!</h1>
+                </div>
+
+                <div class="button row">
+                    <a href="showBookAction">
+                        <input type="submit" value="Go Shopping" class="btn" />
+                    </a>
+                    <a href="viewCartPage">
+                        <input type="submit" value="View Cart" class="btn" />
+                    </a>
+                </div>
+            </c:if>
         </div>
     </body>
 </html>

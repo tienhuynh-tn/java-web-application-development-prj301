@@ -1,0 +1,10 @@
+searchPage
+searchAction
+search.jsp
+confirmDeletePage
+confirmDeleteAction
+deleteAction
+confirmDelete.jsp
+updateAction
+logoutAction
+invalid.html

@@ -8,9 +8,7 @@ package tienhlt.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Properties;
 import javax.naming.NamingException;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -65,7 +63,6 @@ public class DeleteAccountServlet extends HttpServlet {
 //                        + "&txtSearchValue=" + lastSearchValue;
                 url = MyApplicationConstant.DeleteFeatures.SEARCH_FULLNAME_CONTROLLER 
                         + "?txtSearchValue=" + lastSearchValue;
-//                url = "searchAction&txtSearchValue=" + lastSearchValue;
             }
         } catch (SQLException ex) {
             log("DeleteAccountServlet_SQL: " + ex.getMessage());

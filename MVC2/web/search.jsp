@@ -12,26 +12,24 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Search</title>
-        <link rel="stylesheet" href="./css/base.css">
-        <link rel="stylesheet" href="./css/grid.css">
-        <link rel="stylesheet" href="./css/searchStyle.css">
+        <link rel="stylesheet" href="base">
+        <link rel="stylesheet" href="grid">
+        <link rel="stylesheet" href="searchStyle">
     </head>
     <body>
+        <c:set var="isAdmin" value="${sessionScope.ADMIN}" />
+        <c:set var="user" value="${sessionScope.USER}" />
+        <c:set var="properties" value="${applicationScope.SITE_MAP}" />
+        <c:set var="adminUserName" value="${properties.getProperty('admin')}" />
         <div class="container grid">
-            <div class="header row">
-                <div class="welcome">
-                    Welcome, ${sessionScope.FULL_NAME}
+            <c:if test="${isAdmin eq true}">
+                <div class="header row">
+                    <div class="welcome">
+                        Welcome, ${sessionScope.FULL_NAME}
+                    </div>
+                    <a href="logoutAction" class="logout">Log Out</a>
                 </div>
-                <a href="logoutAction" class="logout">Log Out</a>
-            </div>
 
-            <c:set var="properties" value="${applicationScope.SITE_MAP}" />
-            <c:set var="adminUserName" value="${properties.getProperty('admin')}" />
-
-            <c:set var="isAdmin" value="${sessionScope.ADMIN}" />
-
-            <!-- IF ADMIN TRUE -->
-            <c:if test="${not empty isAdmin}">
                 <div class="search row">
                     <h1>Search Account</h1>
                     <form action="searchAction">
@@ -44,7 +42,6 @@
                     </form> 
                 </div>
 
-
                 <c:set var="searchValue" value="${param.txtSearchValue}" />
                 <c:if test="${not empty searchValue}" >
                     <c:set var="result" value="${requestScope.SEARCH_RESULT}" />
@@ -52,9 +49,9 @@
                         <c:if test="${not empty result}">
                             <c:set var="error" value="${requestScope.UPDATE_ERR}" />
                             <c:if test="${not empty error.passwordViolent}">
-                                <font color="red">
+                                <p class="error">
                                 ${error.passwordViolent}
-                                </font>
+                                </p>
                             </c:if>
                             <table border="1">
                                 <thead>
@@ -70,70 +67,69 @@
                                 </thead>
                                 <tbody>
                                     <c:forEach var="dto" items="${result}" varStatus="counter">
-
-                                    <form action="updateAction">
-                                        <tr>
-                                            <td style="text-align: center">
-                                                ${counter.count}
-                                            </td>
-                                            <td>
-                                                ${dto.username}
-                                                <input type="hidden" name="txtUsername" value="${dto.username}" />
-                                            </td>
-                                            <td>
-                                                <input type="text" name="txtPassword" value="${dto.password}" />
-                                            </td>
-                                            <td>
-                                                ${dto.lastname}
-                                            </td>
-                                            <td style="text-align: center">
-                                                <input type="checkbox" name="chkAdmin" value="ON" 
-                                                       <c:if test="${dto.role eq true}">
-                                                           checked="checked"
-                                                       </c:if>
-                                                       />
-                                            </td>
-                                            <td>
-                                                <c:url var="urlRewriting" value="confirmDeleteAction">
-                                                    <c:param name="pk" value="${dto.username}" />
-                                                    <c:param name="lastSearchValue" value="${searchValue}" />
-                                                </c:url>
-                                                <c:if test="${isAdmin eq adminUserName}">
-                                                    <c:if test="${dto.username ne adminUserName}">
-                                                        <a href="${urlRewriting}" class="delete">Delete</a>
-                                                    </c:if>
-                                                </c:if>
-                                                <c:if test="${isAdmin ne adminUserName}">
-                                                    <c:if test="${dto.role eq false}">
-                                                        <a href="${urlRewriting}" class="delete">Delete</a>
-                                                    </c:if>
-                                                </c:if>
-                                            </td>
-                                            <td>
-                                                <c:if test="${isAdmin eq adminUserName}">
-                                                    <input type="submit" value="Update" class="btn"
-                                                           <c:if test="${dto.username eq adminUserName}">
-                                                               style="visibility: hidden"
+                                        <form action="updateAction">
+                                            <tr>
+                                                <td style="text-align: center">
+                                                    ${counter.count}
+                                                </td>
+                                                <td>
+                                                    ${dto.username}
+                                                    <input type="hidden" name="txtUsername" value="${dto.username}" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="txtPassword" value="${dto.password}" />
+                                                </td>
+                                                <td>
+                                                    ${dto.lastname}
+                                                </td>
+                                                <td style="text-align: center">
+                                                    <input type="checkbox" name="chkAdmin" value="ON" 
+                                                           <c:if test="${dto.role eq true}">
+                                                               checked="checked"
                                                            </c:if>
                                                            />
-                                                    <input type="hidden" name="lastSearchValue" 
-                                                           value="${searchValue}" />
-                                                </c:if>
-                                                <c:if test="${isAdmin ne adminUserName}">
-                                                    <input type="submit" value="Update" class="btn"
-                                                           <c:if test="${isAdmin ne dto.username}">
-                                                               <c:if test="${dto.role eq true}">
+                                                </td>
+                                                <td>
+                                                    <c:url var="urlRewriting" value="confirmDeleteAction">
+                                                        <c:param name="pk" value="${dto.username}" />
+                                                        <c:param name="lastSearchValue" value="${searchValue}" />
+                                                    </c:url>
+                                                    <c:if test="${user eq adminUserName}">
+                                                        <c:if test="${dto.username ne adminUserName}">
+                                                            <a href="${urlRewriting}" class="delete">Delete</a>
+                                                        </c:if>
+                                                    </c:if>
+                                                    <c:if test="${user ne adminUserName}">
+                                                        <c:if test="${dto.role eq false}">
+                                                            <a href="${urlRewriting}" class="delete">Delete</a>
+                                                        </c:if>
+                                                    </c:if>
+                                                </td>
+                                                <td>
+                                                    <c:if test="${user eq adminUserName}">
+                                                        <input type="submit" value="Update" class="btn"
+                                                               <c:if test="${dto.username eq adminUserName}">
                                                                    style="visibility: hidden"
                                                                </c:if>
-                                                           </c:if>
-                                                           />
-                                                    <input type="hidden" name="lastSearchValue" 
-                                                           value="${searchValue}" />
-                                                </c:if>
-                                            </td>
-                                        </tr>
-                                    </form>
-                                </c:forEach>
+                                                               />
+                                                        <input type="hidden" name="lastSearchValue" 
+                                                               value="${searchValue}" />
+                                                    </c:if>
+                                                    <c:if test="${user ne adminUserName}">
+                                                        <input type="submit" value="Update" class="btn"
+                                                               <c:if test="${user ne dto.username}">
+                                                                   <c:if test="${dto.role eq true}">
+                                                                       style="visibility: hidden"
+                                                                   </c:if>
+                                                               </c:if>
+                                                               />
+                                                        <input type="hidden" name="lastSearchValue" 
+                                                               value="${searchValue}" />
+                                                    </c:if>
+                                                </td>
+                                            </tr>
+                                        </form>
+                                    </c:forEach>
                                 </tbody>
                             </table> 
                         </c:if>
@@ -144,9 +140,14 @@
                 </c:if>
             </c:if>
 
+            <c:if test="${isAdmin eq false}">
+                <div class="header row">
+                    <div class="welcome">
+                        Welcome, ${sessionScope.FULL_NAME}
+                    </div>
+                    <a href="logoutAction" class="logout">Log Out</a>
+                </div>
 
-            <!-- IF ADMIN FALSE -->     
-            <c:if test="${empty isAdmin}">
                 <div class="header row">
                     <h1>Your Profile</h1>
                 </div>
@@ -169,7 +170,7 @@
                             </div>
                         </div>
                         <div>
-                            <img src="./img/avatar.jpg" alt="Avatar">
+                            <img src="avatar" alt="Avatar">
                         </div>
                     </c:if>
                 </div>

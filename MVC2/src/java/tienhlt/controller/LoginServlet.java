@@ -62,8 +62,9 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("FULL_NAME", fullname);
                 
                 if (isAdmin) {
-                    session.setAttribute("ADMIN", username);
+                    session.setAttribute("ADMIN", isAdmin);
                 } else {
+                    session.setAttribute("ADMIN", isAdmin);
                     session.setAttribute("SHOW_PROFILE", dto);
                 }
                 
@@ -79,8 +80,6 @@ public class LoginServlet extends HttpServlet {
             log("LoginServlet_SQL: " + ex.getMessage());
         } finally {
             response.sendRedirect(url);
-//            RequestDispatcher rd = request.getRequestDispatcher(url);
-//            rd.forward(request, response);
             out.close();
         }
     }

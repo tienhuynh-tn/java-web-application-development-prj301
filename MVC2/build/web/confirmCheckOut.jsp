@@ -12,19 +12,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Confirm Check Out</title>
-        <link rel="stylesheet" href="./css/base.css">
-        <link rel="stylesheet" href="./css/grid.css">
-        <link rel="stylesheet" href="./css/confirmCheckOutStyle.css">
+        <link rel="stylesheet" href="base">
+        <link rel="stylesheet" href="grid">
+        <link rel="stylesheet" href="confirmCheckOutStyle">
     </head>
     <body>
-        <%--<c:set var="cart" value="${sessionScope.CART}" />
-        
-        <!-- NOT EMPTY CART -->
-        <c:if test="${not empty cart}">
-            <c:set var="items" value="${cart.items}" />
-            
-            <!-- NOT EMPTY ITEMS -->
-            <c:if test="${not empty items}">--%>
         <div class="container grid">
             <c:set var="list" value="${sessionScope.CHECK_OUT_ITEMS}" />
 
@@ -115,22 +107,5 @@
                 </c:if>
             </div>
         </div>
-
-        <%--
-        
-        <!-- EMPTY ITEMS -->
-        <c:if test="${empty items}">
-            <h2>No item existed in your cart</h2>
-            <a href="showBookAction">
-                Click Here To Go Shopping!
-            </a>
-        </c:if>
-    </c:if>
-    
-    <!-- EMPTY CART -->
-    <c:if test="${empty cart}">
-        <h2>No cart is existed</h2>
-        <a href="showBookAction">Click Here To Go Shopping!</a>
-    </c:if>--%>
     </body>
 </html>
