@@ -13,6 +13,6 @@ This repository synthesize all about MVC2 Model
 5| ... | ... 
 
 ## :heavy_check_mark: License & Copyright
-&copy; 2021 Tien Huynh tienhuynh-tn Licensed under the [MIT LICENSE](https://github.com/tienhuynh-tn/java-web-application-development-prj301/blob/master/LICENSE).
+&copy; 2021 Tien Huynh tienhuynh-tn Licensed under the [GPL-3.0 LICENSE](https://github.com/tienhuynh-tn/java-web-application-development-prj301/blob/master/LICENSE).
 
 > :love_you_gesture: Feel free to use my repository and star it if you find something interesting :love_you_gesture:
