@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/MVC2">
+<Context path="/MVC2">  
     <Resource name="tienhuynh-tn" type="javax.sql.DataSource" auth="Container"
             driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-            url="jdbc:sqlserver://localhost:1433;databaseName=PRJ301_MVC2;instanceName=TIENHUYNHTN"
-            username="sa" password="Thuytien"
+            url="jdbc:sqlserver://localhost:1433;databaseName=PRJ301_MVC2;instanceName=your-instacnce-sql-server-name"
+            username="your-username" password="your-password"
     />
 </Context>
