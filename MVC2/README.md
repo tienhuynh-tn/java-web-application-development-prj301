@@ -30,12 +30,32 @@ The main project folder that for learning and practicing MVC2 model in class
 </div>
   
 ## Technology
+**1. Frontend**
+  - HTML, CSS
+  - JSP - JavaServer Pages
+  - JSTL - JSP Standard Tag Library
+
+**2. Backend**
+  - Servlets - a Java programming language class that is used to extend the capabilities of servers that host applications accessed by means of a request-response programming model
+  - JDBC - Java Database Connectivity - a Java API to connect and execute the query with the database
+
+**3. Database**
+  - Microsoft SQL Server - a relational model database server produced by Microsoft
 
 ## Useful Resources
+
+#| Name | Description
+-| ---- | -----------
+1| [web Folder](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/MVC2/web) | -----------
+2| [src Folder](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/MVC2/src/java) | -----------
+3| [Database File](https://github.com/tienhuynh-tn/java-web-application-development-prj301/blob/master/MVC2/Database-PRJ301-MVC2.sql) | -----
+4| [META-INF Folder](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/MVC2/web/META-INF) | ---
+5| [WEB-INF Folder](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/MVC2/web/WEB-INF) | ---
 
 ## How Can Get Started
 
 ## Learn More
+- [Manual Deploying Tomcat Server](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/Manual%20Deploying%20Tomcat%20Server)
 
 ## License & Copyright
 &copy; 2021 Tien Huynh tienhuynh-tn Licensed under the [GPL-3.0 LICENSE](https://github.com/tienhuynh-tn/java-web-application-development-prj301/blob/master/LICENSE).
