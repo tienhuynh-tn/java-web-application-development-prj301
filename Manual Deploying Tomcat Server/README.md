@@ -62,7 +62,7 @@ This `README.md` file guides how to deploy a Tomcat Server manually
 **4. CATALINA_HOME:**
 - Remember to extract folder Apache Tomcat that you downloaded before
 - Click `New...` to create new environment variable in `System variables`
-- Variable Name: `CLASSPATH`
+- Variable Name: `CATALINA_HOME`
 - Variable Value: `[url-to-extracted-apache-tomcat-folder]`
 
 ## :running_woman: Manual Deploying Tomcat Server
