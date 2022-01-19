@@ -15,6 +15,9 @@ This `README.md` file guides how to deploy a Tomcat Server manually
 - [License & Copyright](#grimacing-license--copyright)
 
 ## :octocat: What is Tomcat Server?
+It is an open-source Java servlet container that implements many Java Enterprise Specs such as the Websites API, Java-Server Pages and last but not least, the Java Servlet. The complete name of Tomcat is "Apache Tomcat" it was developed in an open, participatory environment and released in 1998 for the very first time. It began as the reference implementation for the very first Java-Server Pages and the Java Servlet API. However, it no longer works as the reference implementation for both of these technologies, but it is considered as the first choice among the users even after that. It is still one of the most widely used java-sever due to several capabilities such as good extensibility, proven core engine, and well-test and durable. Here we used the term "servlet" many times, so what is java servlet; it is a kind of software that enables the webserver to handle the dynamic(java-based) content using the Http protocols.
+
+In simple words, we can say that The Apache Tomcat is actually a server and a servlet container.
 
 ## :link: Download Apache Tomcat
 :point_right: Go to [Apache Tomcat](https://tomcat.apache.org/index.html) to find the version that suitable for your computer and download
@@ -92,6 +95,7 @@ datetime INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolH
 
 ## :closed_book: Learn More
 - [Triển khai Deploy ứng dụng web trên server Tomcat độc lập với Netbeans](http://www.kieutrongkhanh.net/2016/08/trien-khai-deploy-ung-dung-web-tren.html) - Author: Kieu Trong Khanh
+- [What is Tomcat?](https://www.javatpoint.com/what-is-tomcat)
 
 ## :grimacing: License & Copyright
 &copy; 2021 Tien Huynh tienhuynh-tn Licensed under the [MIT LICENSE](https://github.com/tienhuynh-tn/java-web-application-development-prj301/blob/master/LICENSE).
