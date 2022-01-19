@@ -81,8 +81,7 @@ datetime INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolH
 - Your browser will display a cat
 
 ## :rocket: Deploy your Web Application
-- Find the `.war` file then paste in `webapps` folder in folder Apache Tomcat in your computer
-  - Ex: [MVC2.war](https://github.com/tienhuynh-tn/java-web-application-development-prj301/blob/master/MVC2/dist/MVC2.war)
+- Find the `.war` file of your application then paste in `webapps` folder in folder Apache Tomcat in your computer. Or you can compress your web application folder with folder name extensions .rar, then change .rar to .war
 - Go back to your browser then type more: `your-project-name`
 - Your project will run automatically
 
