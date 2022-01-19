@@ -28,11 +28,15 @@ In simple words, we can say that The Apache Tomcat is actually a server and a se
 
 ## :heavy_check_mark: Check for Java Runtime Environment and Set Up
 *For Window OS*
+
 ### :triangular_flag_on_post:	Check for Java Runtime Environment: 
 - Press `Window + R`
 - Type `cmd`
 - Type `javac` then press Enter, `java` then press Enter, and `keytool` then press Enter
+- If after each command, you don't see the information of its, you need to set up environment variables as below
+
 ### :computer: Set up:
+
 **1. JAVA_HOME:**
 - In search box on desktop, type `environment` and choose `Edit the system environment variables`
 - The `System Properties` window is opented
