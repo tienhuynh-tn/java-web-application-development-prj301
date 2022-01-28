@@ -2,6 +2,8 @@
 
 The main project folder that for learning and practicing MVC2 model in class
 
+Live Demo: :point_right: [here](https://youtu.be/UFN6RS24hAc)
+
 ## Table of Contents
 - [Description](#description)
 - [Preview Screenshot](#preview-screenshot)
@@ -41,6 +43,11 @@ The main project folder that for learning and practicing MVC2 model in class
 
 **3. Database**
   - Microsoft SQL Server - a relational model database server produced by Microsoft
+
+**4. Tool**
+  - Netbeans 8.2
+  - Java JDK 8
+  - Apache Tomcat 8.5.29
 
 ## Useful Resources
 
