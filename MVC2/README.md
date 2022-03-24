@@ -53,13 +53,18 @@ Live Demo: :point_right: [here](https://youtu.be/UFN6RS24hAc)
 
 #| Name | Description
 -| ---- | -----------
-1| [web Folder](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/MVC2/web) | -----------
-2| [src Folder](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/MVC2/src/java) | -----------
-3| [Database File](https://github.com/tienhuynh-tn/java-web-application-development-prj301/blob/master/MVC2/Database-PRJ301-MVC2.sql) | -----
-4| [META-INF Folder](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/MVC2/web/META-INF) | ---
-5| [WEB-INF Folder](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/MVC2/web/WEB-INF) | ---
+1| [web Folder](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/MVC2/web) | -
+2| [src Folder](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/MVC2/src/java) | source code
+3| [Database File](https://github.com/tienhuynh-tn/java-web-application-development-prj301/blob/master/MVC2/Database-PRJ301-MVC2.sql) | database script
+4| [META-INF Folder](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/MVC2/web/META-INF) | -
+5| [WEB-INF Folder](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/MVC2/web/WEB-INF) | -
 
 ## How Can Get Started
+
+- Using NetBeans 8.2 IDE to start project easier
+- After open project in IDE, import JSTL 1.2.1 library that support by IDE
+- Run the [`Database-PRJ301-MVC2.sql`](https://github.com/tienhuynh-tn/java-web-application-development-prj301/blob/master/MVC2/Database-PRJ301-MVC2.sql) script 
+- Replace some database connection imformation in [`context.xml`](https://github.com/tienhuynh-tn/java-web-application-development-prj301/blob/master/MVC2/web/META-INF/context.xml) file
 
 ## Learn More
 - [Manual Deploying Tomcat Server](https://github.com/tienhuynh-tn/java-web-application-development-prj301/tree/master/Manual%20Deploying%20Tomcat%20Server)
